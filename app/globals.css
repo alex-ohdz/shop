@@ -1,3 +1,30 @@
 .listDrawer:hover {
-	color: rgb(31, 204, 204);
+	color: rgb(255, 255, 255);
+	background-color: #1976d2;
+}
+.itemProd:hover{
+	color: rgb(255, 255, 255);
+	background-color:#1976d2
+}
+#demo-customized-button:hover,
+.ofBtn:hover {
+	background-color: #5587b8d1;
+}
+#demo-customized-button::before, .ofBtn::before {
+	content: "";
+	position: absolute;
+	width: 0;
+	height: 2px; /* Grosor de la línea */
+	background-color: rgb(225, 225, 230); /* Color de la línea */
+	bottom: 0;
+	left: 0;
+	transition: width 0.3s ease; /* Animación de 0.3 segundos */
+  }
+  #demo-customized-button:hover::before, .ofBtn:hover::before {
+	width: 100%;
+	right: 0;
+	left: auto;
+  }
+  .homeBtn{
+	
   }

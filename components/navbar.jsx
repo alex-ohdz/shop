@@ -7,6 +7,7 @@ import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
+import Link from "next/link";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
@@ -15,15 +16,18 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import CustomizedMenus from "./buttonNav.jsx";
+import SearchNav from "./searchNav.jsx";
+import UserNav from "./userNav.jsx";
+
 
 const drawerWidth = 240;
+
 const navItems = [
-  "Ofertas",
-  "Alimentos",
-  "Aseo Personal",
-  "Limpieza del hogar",
-  "Electrodomésticos",
-  "Ferretería",
+  { nombre: "Alimentos", url: "/productos/alimentos" },
+  { nombre: "Aseo Personal", url: "/productos/aseo-personal" },
+  { nombre: "Limpieza del hogar", url: "/productos/limpieza-del-hogar" },
+  { nombre: "Electrodomésticos", url: "/productos/electrodomesticos" },
+  { nombre: "Ferretería", url: "/productos/ferreteria" },
 ];
 
 function DrawerAppBar(props) {
@@ -36,17 +40,24 @@ function DrawerAppBar(props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
+      <Typography className="homeBtn" variant="h6" sx={{ my: 2 }}>
         MercanciaVC
       </Typography>
       <Divider />
       <List>
         {navItems.map((item) => (
-          <ListItem key={item} disablePadding className="listDrawer">
-            <ListItemButton sx={{ textAlign: "center"}}>
-              <ListItemText primary={item} />
-            </ListItemButton>
-          </ListItem>
+          <Link
+            key={item.nombre}
+            href={`${item.url}`}
+            passHref
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <ListItem key={item.nombre} disablePadding className="listDrawer">
+              <ListItemButton sx={{ textAlign: "center" }}>
+                <ListItemText primary={item.nombre} />
+              </ListItemButton>
+            </ListItem>
+          </Link>
         ))}
       </List>
     </Box>
@@ -70,17 +81,35 @@ function DrawerAppBar(props) {
             <MenuIcon />
           </IconButton>
           <Box sx={{ display: { xs: "none", sm: "flex" } }}>
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ mr: 1, display: { xs: "none", sm: "block" } }}
+            <Link
+              href="/"
+              passHref
+              style={{ textDecoration: "none", color: "inherit" }}
             >
-              MercanciaVC
-            </Typography>
-
+              <Typography
+                variant="h6"
+                component="div"
+                sx={{
+                  mr: 1,
+                  display: { xs: "none", sm: "block" },
+                }}
+              >
+                MercanciaVC
+              </Typography>
+            </Link>
             <CustomizedMenus />
+            <Link
+              href={"/ofertas"}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <Button className="ofBtn" sx={{ color: "inherit" }}>
+                {"Ofertas"}
+              </Button>
+            </Link>
 
-            <Button sx={{ color: "inherit" }}>{"Ofertas"}</Button>
+            <SearchNav/>
+            <UserNav/>
+
           </Box>
         </Toolbar>
       </AppBar>
