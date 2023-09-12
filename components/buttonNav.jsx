@@ -54,7 +54,7 @@ const itemProd = [
   { nombre: "Aseo Personal", url: "/productos/aseo-personal" },
   { nombre: "Limpieza del hogar", url: "/productos/limpieza-del-hogar" },
   { nombre: "Electrodomésticos", url: "/productos/electrodomesticos" },
-  { nombre: "Ferretería", url: "/productos/ferreteria" }
+  { nombre: "Ferretería", url: "/productos/ferreteria" },
 ];
 
 export default function CustomizedMenus() {
@@ -91,7 +91,7 @@ export default function CustomizedMenus() {
         onClose={handleClose}
       >
         {itemProd.map((item) => (
-          <Link 
+          <Link
             key={item.nombre}
             href={`${item.url}`}
             passHref

@@ -18,6 +18,7 @@ import Button from "@mui/material/Button";
 import CustomizedMenus from "./buttonNav.jsx";
 import SearchNav from "./searchNav.jsx";
 import UserNav from "./userNav.jsx";
+import Social from "./social.jsx";
 
 
 const drawerWidth = 240;
@@ -40,9 +41,15 @@ function DrawerAppBar(props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography className="homeBtn" variant="h6" sx={{ my: 2 }}>
-        MercanciaVC
-      </Typography>
+      <Link
+        href="/"
+        passHref
+        style={{ textDecoration: "none", color: "inherit" }}
+      >
+        <Typography className="homeBtn" variant="h6" sx={{ my: 2 }}>
+          MercanciaVC
+        </Typography>
+      </Link>
       <Divider />
       <List>
         {navItems.map((item) => (
@@ -59,6 +66,7 @@ function DrawerAppBar(props) {
             </ListItem>
           </Link>
         ))}
+         <Social />
       </List>
     </Box>
   );
@@ -70,7 +78,13 @@ function DrawerAppBar(props) {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar component="nav">
-        <Toolbar>
+        <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -81,57 +95,61 @@ function DrawerAppBar(props) {
             <MenuIcon />
           </IconButton>
           <Box sx={{ display: { xs: "none", sm: "flex" } }}>
-            <Link
-              href="/"
-              passHref
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              <Typography
-                variant="h6"
-                component="div"
-                sx={{
-                  mr: 1,
-                  display: { xs: "none", sm: "block" },
-                }}
+            <Box sx={{ display: { xs: "none", sm: "flex" } }}>
+              <Link
+                href="/"
+                passHref
+                style={{ textDecoration: "none", color: "inherit" }}
               >
-                MercanciaVC
-              </Typography>
-            </Link>
-            <CustomizedMenus />
-            <Link
-              href={"/ofertas"}
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              <Button className="ofBtn" sx={{ color: "inherit" }}>
-                {"Ofertas"}
-              </Button>
-            </Link>
-
-            <SearchNav/>
-            <UserNav/>
-
+                <Typography
+                  variant="h6"
+                  component="div"
+                  sx={{
+                    mr: 1,
+                    display: { xs: "none", sm: "block" },
+                  }}
+                >
+                  MercanciaVC
+                </Typography>
+              </Link>
+              <CustomizedMenus />
+              <Link
+                href={"/ofertas"}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                <Button className="ofBtn" sx={{ color: "inherit" }}>
+                  {"Ofertas"}
+                </Button>
+              </Link>
+            </Box>
+          </Box>
+          <Box sx={{ display: { xs: "flex", sm: "flex" } }}>
+            <SearchNav />
+            <UserNav />
           </Box>
         </Toolbar>
       </AppBar>
       <nav>
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true,
-          }}
-          sx={{
-            display: { xs: "block", sm: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
-          }}
-        >
-          {drawer}
-        </Drawer>
+      <Drawer
+  container={container}
+  variant="temporary"
+  open={mobileOpen}
+  onClose={handleDrawerToggle}
+  ModalProps={{
+    keepMounted: true,
+  }}
+  sx={{
+    display: { xs: "block", sm: "none" },
+    "& .MuiDrawer-paper": {
+      boxSizing: "border-box",
+      width: drawerWidth,
+      maxHeight: '50vh' 
+    },
+  }}
+>
+  {drawer}
+</Drawer>
+
       </nav>
       <Toolbar />
     </Box>
