@@ -19,7 +19,8 @@ import CustomizedMenus from "./buttonNav.jsx";
 import SearchNav from "./searchNav.jsx";
 import UserNav from "./userNav.jsx";
 import Social from "./social.jsx";
-
+import CarshopNav from "./carshopNav.jsx";
+import LogoComponent from "./logo.jsx";
 
 const drawerWidth = 240;
 
@@ -101,7 +102,8 @@ function DrawerAppBar(props) {
                 passHref
                 style={{ textDecoration: "none", color: "inherit" }}
               >
-                <Typography
+                <LogoComponent/>
+                {/* <Typography
                   variant="h6"
                   component="div"
                   sx={{
@@ -110,7 +112,7 @@ function DrawerAppBar(props) {
                   }}
                 >
                   MercanciaVC
-                </Typography>
+                </Typography> */}
               </Link>
               <CustomizedMenus />
               <Link
@@ -125,6 +127,8 @@ function DrawerAppBar(props) {
           </Box>
           <Box sx={{ display: { xs: "flex", sm: "flex" } }}>
             <SearchNav />
+            {/* <SearchNav /> */}
+            <CarshopNav/>
             <UserNav />
           </Box>
         </Toolbar>
@@ -143,7 +147,7 @@ function DrawerAppBar(props) {
     "& .MuiDrawer-paper": {
       boxSizing: "border-box",
       width: drawerWidth,
-      maxHeight: '50vh' 
+      maxHeight: '60vh' 
     },
   }}
 >

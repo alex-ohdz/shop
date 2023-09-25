@@ -1,8 +1,11 @@
+import React, { useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
+import { IconButton } from "@mui/material";
 
 const Search = styled("div")(({ theme }) => ({
+  display: "flex",
   position: "relative",
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -13,42 +16,59 @@ const Search = styled("div")(({ theme }) => ({
   marginLeft: 0,
   width: "100%",
   [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
+    marginLeft: theme.spacing(2),
     width: "auto",
   },
 }));
 
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    paddingLeft: `calc(1em + ${theme.spacing(-1)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: "20ch",
+      width: "30ch",
     },
   },
 }));
+
 const SearchNav = () => {
+  const [searchValue, setSearchValue] = useState("");
+
+  const handleSearchInputChange = (event) => {
+    setSearchValue(event.target.value);
+  };
+
+  const handleSearch = () => {
+    console.log("Búsqueda realizada: ", searchValue);
+    setSearchValue(""); 
+  };
+
+  const handleIconClick = () => {
+    if (searchValue) {
+      handleSearch();
+    }
+  };
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter'&& searchValue) {
+      event.preventDefault();
+      handleSearch();
+    }
+  };
+
   return (
     <Search>
-      <SearchIconWrapper>
+      <IconButton sx={{color:"inherit"}} onClick={handleIconClick}>
         <SearchIcon />
-      </SearchIconWrapper>
+      </IconButton>
       <StyledInputBase
-        placeholder="Search…"
+        placeholder="Buscar..."
         inputProps={{ "aria-label": "search" }}
+        value={searchValue}
+        onChange={handleSearchInputChange}
+        onKeyDown={handleKeyDown}
       />
     </Search>
   );

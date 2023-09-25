@@ -1,31 +1,60 @@
 .listDrawer:hover {
-	color: rgb(255, 255, 255);
-	background-color: #1976d2;
+  color: rgb(255, 255, 255);
+  background-color: #1976d2;
 }
-.itemProd:hover{
-	color: rgb(255, 255, 255);
-	background-color:#1976d2
+.itemProd:hover {
+  color: rgb(255, 255, 255);
+  background-color: #1976d2;
 }
 #demo-customized-button:hover,
 .ofBtn:hover {
-	background-color: #5587b8d1;
+  background-color: #5587b8d1;
 }
-#demo-customized-button::before, .ofBtn::before {
-	content: "";
-	position: absolute;
-	width: 0;
-	height: 2px; /* Grosor de la línea */
-	background-color: rgb(225, 225, 230); /* Color de la línea */
-	bottom: 0;
-	left: 0;
-	transition: width 0.3s ease; /* Animación de 0.3 segundos */
-  }
-  #demo-customized-button:hover::before, .ofBtn:hover::before {
-	width: 100%;
-	right: 0;
-	left: auto;
-  }
-  .homeBtn{
-	
-  }
+#demo-customized-button::before,
+.ofBtn::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px; /* Grosor de la línea */
+  background-color: rgb(225, 225, 230); /* Color de la línea */
+  bottom: 0;
+  left: 0;
+  transition: width 0.3s ease; /* Animación de 0.3 segundos */
+}
+#demo-customized-button:hover::before,
+.ofBtn:hover::before {
+  width: 100%;
+  right: 0;
+  left: auto;
+}
+.homeBtn {
+}
+.searchIcon {
+}
+/* const SearchIconWrapper = styled("div")(({ theme }) => ({
+	padding: theme.spacing(0, 2),
+	height: "100%",
+	position: "absolute",
+	pointerEvents: "auto",
+	display: "flex",
+	alignItems: "center",
+	justifyContent: "center",
+  })); */
+#logoNav {
+  display: flex;
+  /* background-color: lightblue; */
+  /* border: 1px solid darkblue; */
+  /* padding: 10px;
+  font-size: 16px; */
+  height: 40px;
+  width: 80px;
+  margin-right: 15px;
+  /* padding: 0px; */
+  /* margin: 0px; */
   
+}
+#imgLogo {
+  width: auto;
+  height: 110px;
+  border-radius: 50%;
+}
