@@ -18,6 +18,7 @@ import Button from "@mui/material/Button";
 import CustomizedMenus from "./buttonNav.jsx";
 import SearchNav from "./searchNav.jsx";
 import UserNav from "./userNav.jsx";
+// import Login from "./user.jsx";
 import Social from "./social.jsx";
 import CarshopNav from "./carshopNav.jsx";
 import LogoComponent from "./logo.jsx";
@@ -103,16 +104,6 @@ function DrawerAppBar(props) {
                 style={{ textDecoration: "none", color: "inherit" }}
               >
                 <LogoComponent/>
-                {/* <Typography
-                  variant="h6"
-                  component="div"
-                  sx={{
-                    mr: 1,
-                    display: { xs: "none", sm: "block" },
-                  }}
-                >
-                  MercanciaVC
-                </Typography> */}
               </Link>
               <CustomizedMenus />
               <Link
@@ -127,9 +118,9 @@ function DrawerAppBar(props) {
           </Box>
           <Box sx={{ display: { xs: "flex", sm: "flex" } }}>
             <SearchNav />
-            {/* <SearchNav /> */}
             <CarshopNav/>
             <UserNav />
+            {/* <Login/> */}
           </Box>
         </Toolbar>
       </AppBar>

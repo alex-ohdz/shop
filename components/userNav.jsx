@@ -7,10 +7,23 @@ import Menu from "@mui/material/Menu";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const UserNav = () => {
+  const isUserIsLoggedIn = true;
+
+  const [providers, setProviders] = useState(null);
+
+  useEffect(() => {
+    const setProviders = async () => {
+      const response = await getProviders();
+      setProviders(response);
+    };
+    setProviders();
+  }, []);
+
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -21,37 +34,66 @@ const UserNav = () => {
 
   return (
     <div>
-      <Box sx={{ flexGrow: 0 }}>
-        <Tooltip title="Open settings">
-          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-            <Avatar alt="Remy Sharp" src="" />
-          </IconButton>
-        </Tooltip>
-        <Menu
-          sx={{ mt: "45px" }}
-          id="menu-appbar"
-          anchorEl={anchorElUser}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          keepMounted
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          open={Boolean(anchorElUser)}
-          onClose={handleCloseUserMenu}
-        >
-          {settings.map((setting) => (
-            <MenuItem key={setting} onClick={handleCloseUserMenu}>
-              <Typography textAlign="center">{setting}</Typography>
+      {isUserIsLoggedIn ? (
+        <Box sx={{ flexGrow: 0 }}>
+          <Tooltip title="Usuario">
+            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <Avatar alt="" src="" />
+            </IconButton>
+          </Tooltip>
+          <Menu
+            sx={{ mt: "45px" }}
+            id="menu-appbar"
+            anchorEl={anchorElUser}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            open={Boolean(anchorElUser)}
+            onClose={handleCloseUserMenu}
+          >
+            <MenuItem onClick={handleCloseUserMenu}>
+              <Typography onClick={signOut} textAlign="center">
+                <Link
+                  href="/profile"
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  Iniciar Sesion
+                </Link>
+              </Typography>
             </MenuItem>
-          ))}
-        </Menu>
-      </Box>
+            <MenuItem onClick={handleCloseUserMenu}>
+              <Typography onClick={signOut} textAlign="center">
+                <Link
+                  href="/profile"
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  Crear Cuenta
+                </Link>
+              </Typography>
+            </MenuItem>
+          </Menu>
+        </Box>
+      ) : (
+        <>
+          {providers &&
+            Object.values(providers).map((provider) => {
+              <button
+                type="button"
+                key={provider.name}
+                onClick={() => signIn(provider.id)}
+              >
+                Sign in
+              </button>;
+            })}
+        </>
+      )}
     </div>
   );
 };
-
 export default UserNav;
