@@ -12,16 +12,16 @@ import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const UserNav = () => {
-  const isUserIsLoggedIn = true;
+  const { data: session } = useSession();
 
   const [providers, setProviders] = useState(null);
 
   useEffect(() => {
-    const setProviders = async () => {
+    const setUpProviders = async () => {
       const response = await getProviders();
       setProviders(response);
     };
-    setProviders();
+    setUpProviders();
   }, []);
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -34,7 +34,7 @@ const UserNav = () => {
 
   return (
     <div>
-      {isUserIsLoggedIn ? (
+      {session?.user ? (
         <Box sx={{ flexGrow: 0 }}>
           <Tooltip title="Usuario">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -58,7 +58,7 @@ const UserNav = () => {
             onClose={handleCloseUserMenu}
           >
             <MenuItem onClick={handleCloseUserMenu}>
-              <Typography onClick={signOut} textAlign="center">
+              <Typography onClick={signIn} textAlign="center">
                 <Link
                   href="/profile"
                   style={{ textDecoration: "none", color: "inherit" }}
@@ -67,7 +67,7 @@ const UserNav = () => {
                 </Link>
               </Typography>
             </MenuItem>
-            <MenuItem onClick={handleCloseUserMenu}>
+            {/* <MenuItem onClick={handleCloseUserMenu}>
               <Typography onClick={signOut} textAlign="center">
                 <Link
                   href="/profile"
@@ -76,21 +76,24 @@ const UserNav = () => {
                   Crear Cuenta
                 </Link>
               </Typography>
-            </MenuItem>
+            </MenuItem> */}
           </Menu>
         </Box>
       ) : (
         <>
           {providers &&
-            Object.values(providers).map((provider) => {
-              <button
-                type="button"
-                key={provider.name}
-                onClick={() => signIn(provider.id)}
-              >
-                Sign in
-              </button>;
-            })}
+              Object.values(providers).map((provider) => (
+                <button
+                  type='button'
+                  key={provider.name}
+                  onClick={() => {
+                    signIn(provider.id);
+                  }}
+                  className='black_btn'
+                >
+                  Sign in
+                </button>
+              ))}
         </>
       )}
     </div>
