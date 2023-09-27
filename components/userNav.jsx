@@ -7,14 +7,19 @@ import Menu from "@mui/material/Menu";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import Link from "next/link";
+import PersonAdd from "@mui/icons-material/PersonAdd";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Settings from "@mui/icons-material/Settings";
+import Logout from "@mui/icons-material/Logout";
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import Skeleton from '@mui/material/Skeleton';
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const UserNav = () => {
-  const { data: session } = useSession();
-
+  const { data: session,status } = useSession();
   const [providers, setProviders] = useState(null);
+  const isLoading = status === 'loading';
 
   useEffect(() => {
     const setUpProviders = async () => {
@@ -31,71 +36,90 @@ const UserNav = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
+  if (isLoading) {
+    return  <Skeleton variant="circular" width={40} height={40} />; 
+  }
   return (
     <div>
-      {session?.user ? (
-        <Box sx={{ flexGrow: 0 }}>
-          <Tooltip title="Usuario">
-            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="" src="" />
-            </IconButton>
-          </Tooltip>
-          <Menu
-            sx={{ mt: "45px" }}
-            id="menu-appbar"
-            anchorEl={anchorElUser}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            open={Boolean(anchorElUser)}
-            onClose={handleCloseUserMenu}
-          >
-            <MenuItem onClick={handleCloseUserMenu}>
-              <Typography onClick={signIn} textAlign="center">
-                <Link
-                  href="/profile"
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
-                  Iniciar Sesion
-                </Link>
-              </Typography>
-            </MenuItem>
-            {/* <MenuItem onClick={handleCloseUserMenu}>
-              <Typography onClick={signOut} textAlign="center">
-                <Link
-                  href="/profile"
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
-                  Crear Cuenta
-                </Link>
-              </Typography>
-            </MenuItem> */}
-          </Menu>
-        </Box>
-      ) : (
-        <>
-          {providers &&
-              Object.values(providers).map((provider) => (
-                <button
-                  type='button'
-                  key={provider.name}
-                  onClick={() => {
-                    signIn(provider.id);
-                  }}
-                  className='black_btn'
-                >
-                  Sign in
-                </button>
-              ))}
-        </>
-      )}
+      <Box sx={{ flexGrow: 0 }}>
+        <Tooltip title="Usuario">
+          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+            <Avatar alt="" src={session?.user.image} />
+          </IconButton>
+        </Tooltip>
+        <Menu
+          sx={{ mt: "45px" }}
+          id="menu-appbar"
+          anchorEl={anchorElUser}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          open={Boolean(anchorElUser)}
+          onClose={handleCloseUserMenu}
+        >
+          {session ? (
+            <>
+              <MenuItem disabled onClick={handleCloseUserMenu}>
+                <Typography variant="h6" color="textPrimary">
+                  {session.user.name}
+                </Typography>
+              </MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <ListItemIcon>
+                  <Settings fontSize="small" />
+                </ListItemIcon>
+                <Typography onClick={""} textAlign="center">
+                  Perfil
+                </Typography>
+              </MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
+              <ListItemIcon>
+                    <FavoriteBorderOutlinedIcon fontSize="small" />
+                  </ListItemIcon>
+                <Typography onClick={""} textAlign="center">
+                  Lista de Deseos
+                </Typography>
+              </MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <ListItemIcon>
+                  <Logout fontSize="small" />
+                </ListItemIcon>
+                <Typography onClick={signOut} textAlign="center">
+                  Cerrar sesión
+                </Typography>
+              </MenuItem>
+            </>
+          ) : (
+            providers &&
+            Object.values(providers).map((provider) => (
+              <>
+                <MenuItem key={provider.name} onClick={handleCloseUserMenu}>
+                  <Typography
+                    onClick={() => signIn(provider.id)}
+                    textAlign="center"
+                  >
+                    Iniciar sesión
+                  </Typography>
+                </MenuItem>
+                <MenuItem key={provider.name} onClick={handleCloseUserMenu}>
+                  <ListItemIcon>
+                    <PersonAdd fontSize="small" />
+                  </ListItemIcon>
+                  <Typography onClick={""} textAlign="center">
+                    Crear Cuenta
+                  </Typography>
+                </MenuItem>
+              </>
+            ))
+          )}
+        </Menu>
+      </Box>
     </div>
   );
 };
