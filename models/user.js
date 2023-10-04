@@ -1,21 +1,18 @@
-import {Schema,model,models} from 'mongoose';
+import mongoose, { Schema, models } from "mongoose";
 
-const UserSchema = new Schema({
-	email:{
-		type: String,
-		unique:[true,'Email already exist!'],
-		required:[true,'Email is required!']
-	},
-	username:{
-		type:String,
-		required:[true,'Username is required'],
-		match:[/^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/,'Username invalid, must be between 8 and 20 characters long and can only contain letters, numbers, underscores and dots.']
-	},
-	image:{
-		type:String,
-	},
-})
+const userSchema = new Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
-const User = models.User || model('User',UserSchema);
-
+const User = models.User || mongoose.model("User", userSchema);
 export default User;

@@ -1,7 +1,8 @@
 import DrawerAppBar from "@components/navbar";
 import "./globals.css";
+import 'react-phone-input-2/lib/style.css';
 import { Inter } from "next/font/google";
-import Provider from "@components/provider";
+import NextAuthProvider from "./Provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,12 +15,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Provider>
+        <NextAuthProvider>
           <main>
             <DrawerAppBar />
             {children}
           </main>
-        </Provider>
+        </NextAuthProvider>
       </body>
     </html>
   );

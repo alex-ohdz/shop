@@ -40,6 +40,7 @@ function DrawerAppBar(props) {
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
+  
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
@@ -68,7 +69,8 @@ function DrawerAppBar(props) {
             </ListItem>
           </Link>
         ))}
-         <Social />
+        <Divider />
+        <Social />
       </List>
     </Box>
   );
@@ -94,7 +96,7 @@ function DrawerAppBar(props) {
             onClick={handleDrawerToggle}
             sx={{ display: { sm: "none" } }}
           >
-            <MenuIcon />
+            <MenuIcon sx={{ fontSize: "35px" }} />
           </IconButton>
           <Box sx={{ display: { xs: "none", sm: "flex" } }}>
             <Box sx={{ display: { xs: "none", sm: "flex" } }}>
@@ -103,7 +105,7 @@ function DrawerAppBar(props) {
                 passHref
                 style={{ textDecoration: "none", color: "inherit" }}
               >
-                <LogoComponent/>
+                <LogoComponent />
               </Link>
               <CustomizedMenus />
               <Link
@@ -118,33 +120,31 @@ function DrawerAppBar(props) {
           </Box>
           <Box sx={{ display: { xs: "flex", sm: "flex" } }}>
             <SearchNav />
-            <CarshopNav/>
+            <CarshopNav />
             <UserNav />
-            {/* <Login/> */}
           </Box>
         </Toolbar>
       </AppBar>
       <nav>
-      <Drawer
-  container={container}
-  variant="temporary"
-  open={mobileOpen}
-  onClose={handleDrawerToggle}
-  ModalProps={{
-    keepMounted: true,
-  }}
-  sx={{
-    display: { xs: "block", sm: "none" },
-    "& .MuiDrawer-paper": {
-      boxSizing: "border-box",
-      width: drawerWidth,
-      maxHeight: '60vh' 
-    },
-  }}
->
-  {drawer}
-</Drawer>
-
+        <Drawer
+          container={container}
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true,
+          }}
+          sx={{
+            display: { xs: "block", sm: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+              maxHeight: "55vh",
+            },
+          }}
+        >
+          {drawer}
+        </Drawer>
       </nav>
       <Toolbar />
     </Box>

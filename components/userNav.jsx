@@ -11,15 +11,20 @@ import PersonAdd from "@mui/icons-material/PersonAdd";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import Skeleton from '@mui/material/Skeleton';
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import LoginIcon from "@mui/icons-material/Login";
+import Skeleton from "@mui/material/Skeleton";
+import { Divider } from "@mui/material";
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import LoginForm from "./loginForm";
 
 const UserNav = () => {
-  const { data: session,status } = useSession();
+  const { data: session, status } = useSession();
   const [providers, setProviders] = useState(null);
-  const isLoading = status === 'loading';
+  const [loginFormOpen, setLoginFormOpen] = useState(false);
+
+  const isLoading = status === "loading";
 
   useEffect(() => {
     const setUpProviders = async () => {
@@ -29,6 +34,14 @@ const UserNav = () => {
     setUpProviders();
   }, []);
 
+  const handleOpenLoginForm = () => {
+    setLoginFormOpen(true);
+  };
+
+  const handleCloseLoginForm = () => {
+    setLoginFormOpen(false);
+  };
+
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -37,7 +50,7 @@ const UserNav = () => {
     setAnchorElUser(null);
   };
   if (isLoading) {
-    return  <Skeleton variant="circular" width={40} height={40} />; 
+    return <Skeleton variant="circular" width={40} height={40} />;
   }
   return (
     <div>
@@ -65,11 +78,19 @@ const UserNav = () => {
         >
           {session ? (
             <>
-              <MenuItem disabled onClick={handleCloseUserMenu}>
-                <Typography variant="h6" color="textPrimary">
+              <MenuItem
+                disabled
+                onClick={handleCloseUserMenu}
+                style={{ justifyContent: "center" }}
+              >
+                <Typography color="textPrimary">
                   {session.user.name}
+                  <Typography color="textPrimary">
+                    {session.user.email}
+                  </Typography>
                 </Typography>
               </MenuItem>
+              <Divider />
               <MenuItem onClick={handleCloseUserMenu}>
                 <ListItemIcon>
                   <Settings fontSize="small" />
@@ -79,9 +100,9 @@ const UserNav = () => {
                 </Typography>
               </MenuItem>
               <MenuItem onClick={handleCloseUserMenu}>
-              <ListItemIcon>
-                    <FavoriteBorderOutlinedIcon fontSize="small" />
-                  </ListItemIcon>
+                <ListItemIcon>
+                  <FavoriteBorderOutlinedIcon fontSize="small" />
+                </ListItemIcon>
                 <Typography onClick={""} textAlign="center">
                   Lista de Deseos
                 </Typography>
@@ -100,6 +121,9 @@ const UserNav = () => {
             Object.values(providers).map((provider) => (
               <>
                 <MenuItem key={provider.name} onClick={handleCloseUserMenu}>
+                  <ListItemIcon>
+                    <LoginIcon fontSize="small" />
+                  </ListItemIcon>
                   <Typography
                     onClick={() => signIn(provider.id)}
                     textAlign="center"
@@ -108,18 +132,20 @@ const UserNav = () => {
                   </Typography>
                 </MenuItem>
                 <MenuItem key={provider.name} onClick={handleCloseUserMenu}>
-                  <ListItemIcon>
-                    <PersonAdd fontSize="small" />
-                  </ListItemIcon>
-                  <Typography onClick={""} textAlign="center">
-                    Crear Cuenta
-                  </Typography>
-                </MenuItem>
+              <ListItemIcon>
+                <PersonAdd fontSize="small" />
+              </ListItemIcon>
+              <Typography onClick={handleOpenLoginForm} textAlign="center">
+                Crear Cuenta
+              </Typography>
+            </MenuItem>
               </>
             ))
           )}
+          <LoginForm open={loginFormOpen} onClose={handleCloseLoginForm}/>
         </Menu>
       </Box>
+      
     </div>
   );
 };
