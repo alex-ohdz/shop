@@ -54,7 +54,7 @@ const UserNav = () => {
   }
   return (
     <div>
-      <Box sx={{ flexGrow: 0 }}>
+      <Box>
         <Tooltip title="Usuario">
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
             <Avatar alt="" src={session?.user.image} />

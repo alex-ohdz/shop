@@ -12,12 +12,13 @@ const Search = styled("div")(({ theme }) => ({
   "&:hover": {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
-  marginRight: theme.spacing(2),
+  marginRight: theme.spacing(1),
   marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(2),
-    width: "auto",
+  width: '25vw',  
+  maxWidth: '500px',
+  [theme.breakpoints.down("sm")]: {
+    marginLeft: theme.spacing(1),
+    width: "50vw",  // Ajusta el ancho para pantallas sm
   },
 }));
 
@@ -40,7 +41,7 @@ const SearchNav = () => {
 
   const handleSearch = () => {
     console.log("Búsqueda realizada: ", searchValue);
-    setSearchValue(""); 
+    setSearchValue("");
   };
 
   const handleIconClick = () => {
@@ -49,7 +50,7 @@ const SearchNav = () => {
     }
   };
   const handleKeyDown = (event) => {
-    if (event.key === 'Enter'&& searchValue) {
+    if (event.key === "Enter" && searchValue) {
       event.preventDefault();
       handleSearch();
     }
@@ -57,7 +58,7 @@ const SearchNav = () => {
 
   return (
     <Search>
-      <IconButton sx={{color:"inherit"}} onClick={handleIconClick}>
+      <IconButton sx={{ color: "inherit" }} onClick={handleIconClick}>
         <SearchIcon />
       </IconButton>
       <StyledInputBase

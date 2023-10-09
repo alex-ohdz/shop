@@ -118,7 +118,7 @@ function DrawerAppBar(props) {
               </Link>
             </Box>
           </Box>
-          <Box sx={{ display: { xs: "flex", sm: "flex" } }}>
+          <Box sx={{ display: { xs: "flex"} }}>
             <SearchNav />
             <CarshopNav />
             <UserNav />
