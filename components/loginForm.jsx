@@ -14,9 +14,14 @@ import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 export default function LoginForm({ open, onClose }) {
+  const theme = useTheme();
+  const googleIconURL = "/assets/icons/google-color.svg";
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const initialUserState = {
     firstName: "",
     lastName: "",
@@ -194,30 +199,57 @@ export default function LoginForm({ open, onClose }) {
         />
       </DialogContent>
       <DialogActions>
-      <Button
-      variant="outlined"
-      style={{
-        borderColor: '#4285F4',
-        color: '#4285F4',
-        boxShadow: 'none',
-        textTransform: 'none',
-        margin: '10px',
-      }}
-      startIcon={'Poner icono de google'}
-      onClick={() => console.log('Clicked')}
-    >
-      Iniciar sesión con Google
-    </Button>
-        <Button onClick={onClose} color="primary">
-          Cancelar
-        </Button>
-        <Button
-          onClick={handleSubmit}
-          color="primary"
-          disabled={!isFormComplete}
-        >
-          Crear
-        </Button>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={isMobile ? 12 : "auto"}>
+            <Button onClick={onClose} color="primary">
+              Cancelar
+            </Button>
+            <Button
+              onClick={handleSubmit}
+              color="primary"
+              disabled={!isFormComplete}
+              variant="contained"
+              style={{
+                fontSize: "14px",
+                boxShadow: !isFormComplete
+                  ? "none"
+                  : "0 3px 5px 2px rgba(0, 70, 140, .3)",
+                padding: "10px 20px",
+                background: !isFormComplete
+                  ? "#D3D3D3" // Gris cuando está deshabilitado
+                  : "#00468C", // Azul sólido elegante cuando está habilitado
+                borderRadius: "5px",
+                border: "none",
+                color: "white",
+              }}
+            >
+              Crear cuenta
+            </Button>
+          </Grid>
+        </Grid>
+        <Grid item xs={isMobile ? 12 : "auto"}>
+          <Button
+            fullWidth={isMobile}
+            variant="outlined"
+            style={{
+              borderColor: "#4285F4",
+              color: "#4285F4",
+              boxShadow: "none",
+              textTransform: "none",
+              margin: isMobile ? "10px 0" : "10px",
+            }}
+            startIcon={
+              <img
+                src={googleIconURL}
+                alt="Google"
+                style={{ width: "20px", height: "20px" }}
+              />
+            }
+            onClick={() => console.log("Clicked")}
+          >
+            Iniciar con Google
+          </Button>
+        </Grid>
       </DialogActions>
     </Dialog>
   );

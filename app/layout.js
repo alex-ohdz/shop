@@ -1,6 +1,11 @@
 import DrawerAppBar from "@components/navbar";
 import "./globals.css";
 import 'react-phone-input-2/lib/style.css';
+import 'font-awesome/css/font-awesome.min.css';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 import { Inter } from "next/font/google";
 import NextAuthProvider from "./Provider";
 
