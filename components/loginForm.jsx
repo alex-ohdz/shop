@@ -1,26 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import Link from "next/link";
 import PhoneNumberInput from "./phoneUser";
 import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
-import InputAdornment from "@mui/material/InputAdornment";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { useTheme } from "@mui/material/styles";
+import CustomTextField from "./loginForm/customTextField";
+import GoogleButton from "./loginForm/googleButton";
+import SubmitButton from "./loginForm/submitButton";
+import LoginLink from "./loginForm/loginLink";
+import useLoginForm from "./loginForm/useLoginForm";
+import DialogTitle from "./loginForm/dialogTitleComp";
 
 export default function LoginForm({ open, onClose }) {
-  const theme = useTheme();
   const googleIconURL = "/assets/icons/google-color.svg";
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const initialUserState = {
     firstName: "",
@@ -29,142 +24,69 @@ export default function LoginForm({ open, onClose }) {
     password: "",
     confirmPassword: "",
   };
-  const [user, setUser] = useState(initialUserState);
-  const [termsAccepted, setTermsAccepted] = useState(false);
-  const [passwordMismatch, setPasswordMismatch] = useState(false);
 
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleClickShowPassword = () => {
-    setShowPassword((prev) => !prev);
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    const updatedUser = { ...user, [name]: value }; // Creando un usuario actualizado localmente
-    setUser(updatedUser); // Actualizando el estado del usuario
-
-    if (name === "password" || name === "confirmPassword") {
-      setPasswordMismatch(updatedUser.password !== updatedUser.confirmPassword); // Comparando las contraseñas del usuario actualizado
-    }
-  };
-  useEffect(() => {
-    if (!open) {
-      setUser(initialUserState);
-      setTermsAccepted(false);
-      setPasswordMismatch(false);
-    }
-  }, [open]);
-
-  const handleSubmit = () => {
-    console.log("Crear usuario:", user);
-    onClose();
-  };
-
-  const isFieldEmpty = (field) => field === undefined || field.trim() === "";
-
-  const isFormComplete =
-    !isFieldEmpty(user.firstName) &&
-    !isFieldEmpty(user.lastName) &&
-    !isFieldEmpty(user.email) &&
-    !isFieldEmpty(user.password) &&
-    !isFieldEmpty(user.confirmPassword) &&
-    !isFieldEmpty(user.phoneNumber) && // Asegurarse de que el número de teléfono no esté vacío
-    !passwordMismatch &&
-    termsAccepted;
+  const {
+    user,
+    setUser,
+    termsAccepted,
+    setTermsAccepted,
+    passwordMismatch,
+    showPassword,
+    isFormComplete,
+    handleChange,
+    handleClickShowPassword,
+    handleSubmit,
+  } = useLoginForm(initialUserState, open, onClose);
 
   return (
     <Dialog open={open} disableEscapeKeyDown={true} disableBackdropClick={true}>
-      <DialogTitle
-        sx={{
-          userSelect: "none",
-          cursor: "default",
-          textAlign: "center",
-          color: "#fff",
-          backgroundColor: "#3f51b5",
-          padding: "5px",
-          marginBottom: "10px",
-          boxShadow: "0 2px 10px rgba(0, 0, 0, 0.3)",
-          fontSize: "1.5rem",
-          fontWeight: "bold",
-        }}
-      >
-        Crear Nuevo Usuario
-      </DialogTitle>
+       <DialogTitle onClose={onClose} />
 
       <DialogContent>
         <Grid container spacing={1} style={{ marginBottom: 8, marginTop: 5 }}>
           <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
+            <CustomTextField
               label="Nombre"
               name="firstName"
               value={user.firstName}
               onChange={handleChange}
-              required
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
+            <CustomTextField
               label="Apellidos"
               name="lastName"
               value={user.lastName}
               onChange={handleChange}
-              required
             />
           </Grid>
         </Grid>
-        <TextField
-          fullWidth
-          margin="normal"
+        <CustomTextField
           label="Email"
           name="email"
           value={user.email}
           onChange={handleChange}
-          required
         />
-        <TextField
-          fullWidth
-          margin="normal"
+        <CustomTextField
           label="Contraseña"
           name="password"
-          type={showPassword ? "text" : "password"}
           value={user.password}
           onChange={handleChange}
-          required
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={handleClickShowPassword}>
-                  {showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
+          type="password"
+          showPassword={showPassword}
+          handleClickShowPassword={handleClickShowPassword}
         />
-        <TextField
-          fullWidth
-          margin="normal"
+        <CustomTextField
           label="Confirmar Contraseña"
           name="confirmPassword"
-          type={showPassword ? "text" : "password"}
           value={user.confirmPassword}
           onChange={handleChange}
-          required
+          type="password"
+          showPassword={showPassword}
+          handleClickShowPassword={handleClickShowPassword}
           error={passwordMismatch}
           helperText={passwordMismatch && "Las contraseñas no coinciden"}
           style={{ marginBottom: 24 }}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={handleClickShowPassword}>
-                  {showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
         />
         <PhoneNumberInput
           value={user.phoneNumber}
@@ -199,56 +121,27 @@ export default function LoginForm({ open, onClose }) {
         />
       </DialogContent>
       <DialogActions>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={isMobile ? 12 : "auto"}>
-            <Button onClick={onClose} color="primary">
-              Cancelar
-            </Button>
-            <Button
+        <Grid container spacing={1} direction="column" alignItems="stretch">
+          <Grid item xs={12}>
+            <SubmitButton
               onClick={handleSubmit}
-              color="primary"
-              disabled={!isFormComplete}
-              variant="contained"
-              style={{
-                fontSize: "14px",
-                boxShadow: !isFormComplete
-                  ? "none"
-                  : "0 3px 5px 2px rgba(0, 70, 140, .3)",
-                padding: "10px 20px",
-                background: !isFormComplete
-                  ? "#D3D3D3" // Gris cuando está deshabilitado
-                  : "#00468C", // Azul sólido elegante cuando está habilitado
-                borderRadius: "5px",
-                border: "none",
-                color: "white",
-              }}
-            >
-              Crear cuenta
-            </Button>
+              isFormComplete={isFormComplete}
+            />
           </Grid>
-        </Grid>
-        <Grid item xs={isMobile ? 12 : "auto"}>
-          <Button
-            fullWidth={isMobile}
-            variant="outlined"
-            style={{
-              borderColor: "#4285F4",
-              color: "#4285F4",
-              boxShadow: "none",
-              textTransform: "none",
-              margin: isMobile ? "10px 0" : "10px",
-            }}
-            startIcon={
-              <img
-                src={googleIconURL}
-                alt="Google"
-                style={{ width: "20px", height: "20px" }}
-              />
-            }
-            onClick={() => console.log("Clicked")}
+          <Grid
+            item
+            xs={12}
+            style={{ textAlign: "center", margin: "10px 20px" }}
           >
-            Iniciar con Google
-          </Button>
+            <LoginLink />
+          </Grid>
+
+          <Grid item xs={12}>
+            <GoogleButton
+              onClick={() => console.log("Clicked")}
+              googleIconURL={googleIconURL}
+            />
+          </Grid>
         </Grid>
       </DialogActions>
     </Dialog>
