@@ -11,14 +11,15 @@ const DialogTitleComponent = ({ onClose }) => {
         cursor: "default",
         color: "#fff",
         backgroundColor: "#3f51b5",
-        padding: "5px",
+        padding: "3px",
         marginBottom: "10px",
         boxShadow: "0 2px 10px rgba(0, 0, 0, 0.3)",
         fontSize: "1.5rem",
         fontWeight: "bold",
         display: "flex",
+        fontFamily: "Roboto, Helvetica, Arial, sans-serif",
         alignItems: "center",
-        justifyContent: "center", // Ajustado para centrar el texto
+        justifyContent: "center", 
       }}
     >
       <div style={{ marginLeft: "auto" }}>Crear Nuevo Usuario</div>

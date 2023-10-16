@@ -2,10 +2,7 @@ import React from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
-import Link from "next/link";
-import PhoneNumberInput from "./phoneUser";
+import PhoneNumberInput from "./loginForm/phoneUser";
 import Grid from "@mui/material/Grid";
 import CustomTextField from "./loginForm/customTextField";
 import GoogleButton from "./loginForm/googleButton";
@@ -13,7 +10,9 @@ import SubmitButton from "./loginForm/submitButton";
 import LoginLink from "./loginForm/loginLink";
 import useLoginForm from "./loginForm/useLoginForm";
 import DialogTitle from "./loginForm/dialogTitleComp";
-
+import TermsAndConditionsCheckbox from "./loginForm/termsAndCond";
+import { Box, useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 export default function LoginForm({ open, onClose }) {
   const googleIconURL = "/assets/icons/google-color.svg";
 
@@ -22,7 +21,6 @@ export default function LoginForm({ open, onClose }) {
     lastName: "",
     email: "",
     password: "",
-    confirmPassword: "",
   };
 
   const {
@@ -30,20 +28,22 @@ export default function LoginForm({ open, onClose }) {
     setUser,
     termsAccepted,
     setTermsAccepted,
-    passwordMismatch,
     showPassword,
     isFormComplete,
     handleChange,
     handleClickShowPassword,
     handleSubmit,
   } = useLoginForm(initialUserState, open, onClose);
+  
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <Dialog open={open} disableEscapeKeyDown={true} disableBackdropClick={true}>
-       <DialogTitle onClose={onClose} />
+      <DialogTitle onClose={onClose} />
 
       <DialogContent>
-        <Grid container spacing={1} style={{ marginBottom: 8, marginTop: 5 }}>
+        <Grid container spacing={isMobile ? 0 : 1}>
           <Grid item xs={12} sm={6}>
             <CustomTextField
               label="Nombre"
@@ -76,57 +76,32 @@ export default function LoginForm({ open, onClose }) {
           showPassword={showPassword}
           handleClickShowPassword={handleClickShowPassword}
         />
-        <CustomTextField
-          label="Confirmar Contraseña"
-          name="confirmPassword"
-          value={user.confirmPassword}
-          onChange={handleChange}
-          type="password"
-          showPassword={showPassword}
-          handleClickShowPassword={handleClickShowPassword}
-          error={passwordMismatch}
-          helperText={passwordMismatch && "Las contraseñas no coinciden"}
-          style={{ marginBottom: 24 }}
-        />
-        <PhoneNumberInput
-          value={user.phoneNumber}
-          onChange={(name, value) => setUser({ ...user, [name]: value })}
-        />
-        <FormControlLabel
-          style={{ marginTop: 12 }}
-          control={
-            <Switch
-              checked={termsAccepted}
-              onChange={(e) => setTermsAccepted(e.target.checked)}
-              name="termsAccepted"
-            />
-          }
-          label={
-            <span>
-              Acepto los{" "}
-              <Link
-                href="/terms-and-conditions"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ textDecoration: "none" }}
-                onMouseOver={(e) =>
-                  (e.target.style.textDecoration = "underline")
-                }
-                onMouseOut={(e) => (e.target.style.textDecoration = "none")}
-              >
-                términos y condiciones
-              </Link>
-            </span>
-          }
-        />
+        <Box style={{ marginTop: 15 }}>
+          <PhoneNumberInput
+            value={user.phoneNumber}
+            onChange={(name, value) => setUser({ ...user, [name]: value })}
+          />
+        </Box>
       </DialogContent>
-      <DialogActions>
-        <Grid container spacing={1} direction="column" alignItems="stretch">
-          <Grid item xs={12}>
-            <SubmitButton
-              onClick={handleSubmit}
-              isFormComplete={isFormComplete}
+      <DialogActions style={{
+   boxShadow: "5px 5px 20px rgba(0, 0, 0, 0.2)"
+}}>
+        <Grid container spacing={0} direction="column" alignItems="stretch">
+          <Grid
+            item
+            xs={12}
+            style={{ textAlign: "center", margin: "10px 20px" }}
+          >
+            <TermsAndConditionsCheckbox
+              termsAccepted={termsAccepted}
+              setTermsAccepted={setTermsAccepted}
             />
+            <Grid item xs={12}>
+              <SubmitButton
+                onClick={handleSubmit}
+                isFormComplete={isFormComplete}
+              />
+            </Grid>
           </Grid>
           <Grid
             item
