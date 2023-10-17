@@ -3,16 +3,15 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
 
-const DialogTitleComponent = ({ onClose }) => {
+const DialogTitleComponent = ({ onClose , text }) => {
   return (
     <DialogTitle
     className="cursor"
       sx={{
         color: "#fff",
-        backgroundColor: "#3f51b5",
+        backgroundColor: "#1976d2",
         padding: "3px",
         marginBottom: "4px",
-        boxShadow: "0 2px 10px rgba(0, 0, 0, 0.3)",
         fontSize: "1.5rem",
         fontWeight: "bold",
         display: "flex",
@@ -21,13 +20,13 @@ const DialogTitleComponent = ({ onClose }) => {
         justifyContent: "center", 
       }}
     >
-      <div style={{ marginLeft: "auto" }}>Crear Nuevo Usuario</div>
+      <div style={{ margin:"auto" }}>{text}</div>
 
       <Button
         onClick={onClose}
         color="inherit"
         size="small"
-        style={{ marginLeft: "auto",height:'100%'}} 
+        className="btnFClose"
         
       >
         <CloseIcon className="btnClose"/>

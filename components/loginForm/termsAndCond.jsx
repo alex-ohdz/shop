@@ -20,7 +20,7 @@ function TermsAndConditionsCheckbox({ termsAccepted, setTermsAccepted }) {
           />
         }
         label={
-          <Typography variant="body2" className="cursor termBody">
+          <Typography variant="body2" className="cursor">
             He leído y acepto los{" "}
             <Link
               href="/terms-and-conditions"

@@ -13,8 +13,7 @@ import DialogTitle from "./loginForm/dialogTitleComp";
 import TermsAndConditionsCheckbox from "./loginForm/termsAndCond";
 import { Box, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-export default function LoginForm({ open, onClose }) {
-  const googleIconURL = "/assets/icons/google-color.svg";
+export default function LoginForm({ open, onClose}) {
 
   const initialUserState = {
     firstName: "",
@@ -40,7 +39,7 @@ export default function LoginForm({ open, onClose }) {
 
   return (
     <Dialog open={open} disableEscapeKeyDown={true} disableBackdropClick={true}>
-      <DialogTitle onClose={onClose} />
+      <DialogTitle onClose={onClose} text={"Crear Nuevo Usuario"} />
 
       <DialogContent>
         <Grid container spacing={isMobile ? 0 : 1}>
@@ -83,11 +82,7 @@ export default function LoginForm({ open, onClose }) {
           />
         </Box>
       </DialogContent>
-      <DialogActions
-        style={{
-          boxShadow: "5px 5px 20px rgba(0, 0, 0, 0.2)",
-        }}
-      >
+      <DialogActions>
         <Grid
           container
           spacing={0}
@@ -109,13 +104,12 @@ export default function LoginForm({ open, onClose }) {
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <LoginLink />
+            <LoginLink text1={"¿Ya tienes una cuenta?"} text2={"Entrar"} url={"/"}/>
           </Grid>
 
           <Grid item xs={12}>
             <GoogleButton
               onClick={() => console.log("Clicked")}
-              googleIconURL={googleIconURL}
             />
           </Grid>
         </Grid>

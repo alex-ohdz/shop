@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Typography from "@mui/material/Typography";
 
-const LoginLink = () => {
+const LoginLink = ({ text1, text2, url }) => {
   return (
     <div className="loginCuenta">
       <Typography
@@ -11,13 +11,13 @@ const LoginLink = () => {
           cursor: "default",
         }}
       >
-        ¿Ya tienes una cuenta?{" "}
+        {text1}{" "}
         <Link
-          href="/"
+          href={url}
           passHref
           style={{ textDecoration: "none", color: "blue" }}
         >
-          Entrar
+          {text2}
         </Link>
       </Typography>
     </div>

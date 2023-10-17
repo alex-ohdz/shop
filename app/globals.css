@@ -45,37 +45,36 @@
 .btnClose {
   transition: transform 0.3s;
 }
-
 .btnClose:hover {
   transform: rotate(90deg);
+}
+.btnFClose:hover {
+  background-color: rgb(198, 2, 2);
 }
 .termLink {
   text-decoration: none;
 }
 
 .termLink:hover {
-  text-decoration: underline; 
+  text-decoration: underline;
 }
 
-.cursor{
+.cursor {
   user-select: none;
   cursor: default;
 }
-.termBody{
-  margin-right: auto;
-}
-.actionGrid{
+.actionGrid {
   margin: 10px 30px;
 }
-.loginCuenta{
+.loginCuenta {
   text-align: center;
   margin-bottom: 12px;
   margin-top: 12px;
 }
 .google-btn {
-  background-color: #ECEFF1;
-  border-color: #4285F4;
-  color: #4285F4;
+  background-color: #eceff1;
+  border-color: #4285f4;
+  color: #4285f4;
   text-transform: none;
   padding: 10px 24px;
   border-radius: 5px;
@@ -84,7 +83,7 @@
 }
 
 .google-btn:hover {
-  background-color: #DDE3E9;
+  background-color: #dde3e9;
 }
 
 .google-btn:active {
@@ -101,12 +100,12 @@
 }
 
 .submit-btn.enabled {
-  background-color: #00468C;
-  box-shadow: 0 3px 5px 2px rgba(0, 70, 140, .3);
+  background-color: #00468c;
+  box-shadow: 0 3px 5px 2px rgba(0, 70, 140, 0.3);
 }
 
 .submit-btn.disabled {
-  background-color: #D3D3D3;
+  background-color: #d3d3d3;
 }
 
 .submit-btn.enabled:hover {
@@ -116,6 +115,10 @@
 .submit-btn.enabled:active {
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
 }
-
+.btnSesion {
+  margin-top: 10px;
+  margin-bottom: 15px;
+  padding: 9px 20px;
+}
 
 /* ------------------------------------------------- */

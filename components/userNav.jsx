@@ -2,22 +2,15 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import PersonAdd from "@mui/icons-material/PersonAdd";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import Settings from "@mui/icons-material/Settings";
-import Logout from "@mui/icons-material/Logout";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import LoginIcon from "@mui/icons-material/Login";
 import Skeleton from "@mui/material/Skeleton";
-import { Divider } from "@mui/material";
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import LoginForm from "./loginForm";
+import UserLoggedInMenu from "./UserLoggedInMenu";
+import UserLoggedOutMenu from "./UserLoggedOutMenu";
 
 const UserNav = () => {
   const { data: session, status } = useSession();
@@ -77,75 +70,22 @@ const UserNav = () => {
           onClose={handleCloseUserMenu}
         >
           {session ? (
-            <>
-              <MenuItem
-                disabled
-                onClick={handleCloseUserMenu}
-                style={{ justifyContent: "center" }}
-              >
-                <Typography color="textPrimary">
-                  {session.user.name}
-                  <Typography color="textPrimary">
-                    {session.user.email}
-                  </Typography>
-                </Typography>
-              </MenuItem>
-              <Divider />
-              <MenuItem onClick={handleCloseUserMenu}>
-                <ListItemIcon>
-                  <Settings fontSize="small" />
-                </ListItemIcon>
-                <Typography onClick={""} textAlign="center">
-                  Perfil
-                </Typography>
-              </MenuItem>
-              <MenuItem onClick={handleCloseUserMenu}>
-                <ListItemIcon>
-                  <FavoriteBorderOutlinedIcon fontSize="small" />
-                </ListItemIcon>
-                <Typography onClick={""} textAlign="center">
-                  Lista de Deseos
-                </Typography>
-              </MenuItem>
-              <MenuItem onClick={handleCloseUserMenu}>
-                <ListItemIcon>
-                  <Logout fontSize="small" />
-                </ListItemIcon>
-                <Typography onClick={signOut} textAlign="center">
-                  Cerrar sesión
-                </Typography>
-              </MenuItem>
-            </>
+            <UserLoggedInMenu
+              user={session.user}
+              signOut={signOut}
+              handleCloseUserMenu={handleCloseUserMenu}
+            />
           ) : (
-            providers &&
-            Object.values(providers).map((provider) => (
-              <>
-                <MenuItem key={provider.name} onClick={handleCloseUserMenu}>
-                  <ListItemIcon>
-                    <LoginIcon fontSize="small" />
-                  </ListItemIcon>
-                  <Typography
-                    onClick={() => signIn(provider.id)}
-                    textAlign="center"
-                  >
-                    Iniciar sesión
-                  </Typography>
-                </MenuItem>
-                <MenuItem key={provider.name} onClick={handleCloseUserMenu}>
-              <ListItemIcon>
-                <PersonAdd fontSize="small" />
-              </ListItemIcon>
-              <Typography onClick={handleOpenLoginForm} textAlign="center">
-                Crear Cuenta
-              </Typography>
-            </MenuItem>
-              </>
-            ))
+            <UserLoggedOutMenu
+              providers={providers}
+              signIn={signIn}
+              handleOpenLoginForm={handleOpenLoginForm}
+              handleCloseUserMenu={handleCloseUserMenu}
+            />
           )}
-          <LoginForm open={loginFormOpen} onClose={handleCloseLoginForm}/>
+          <LoginForm open={loginFormOpen} onClose={handleCloseLoginForm} />
         </Menu>
       </Box>
-      
     </div>
   );
 };

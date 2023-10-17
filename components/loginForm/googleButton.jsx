@@ -1,6 +1,11 @@
 import Button from "@mui/material/Button";
+import { signIn } from "next-auth/react";
 
-const GoogleButton = ({ onClick, googleIconURL }) => {
+const GoogleButton = () => {
+  const googleIconURL = "/assets/icons/google-color.svg";
+  const handleGoogleSignIn = async () => {
+    await signIn("google");
+  };
   return (
     <Button
       fullWidth
@@ -13,9 +18,9 @@ const GoogleButton = ({ onClick, googleIconURL }) => {
           style={{ width: "20px", height: "20px" }}
         />
       }
-      onClick={onClick}
+      onClick={handleGoogleSignIn}
     >
-      Iniciar con Google
+      Iniciar sesión con Google
     </Button>
   );
 };
