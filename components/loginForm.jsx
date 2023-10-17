@@ -34,7 +34,7 @@ export default function LoginForm({ open, onClose }) {
     handleClickShowPassword,
     handleSubmit,
   } = useLoginForm(initialUserState, open, onClose);
-  
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -83,31 +83,32 @@ export default function LoginForm({ open, onClose }) {
           />
         </Box>
       </DialogContent>
-      <DialogActions style={{
-   boxShadow: "5px 5px 20px rgba(0, 0, 0, 0.2)"
-}}>
-        <Grid container spacing={0} direction="column" alignItems="stretch">
-          <Grid
-            item
-            xs={12}
-            style={{ textAlign: "center", margin: "10px 20px" }}
-          >
+      <DialogActions
+        style={{
+          boxShadow: "5px 5px 20px rgba(0, 0, 0, 0.2)",
+        }}
+      >
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="stretch"
+          className="actionGrid"
+        >
+          <Grid item xs={12}>
             <TermsAndConditionsCheckbox
               termsAccepted={termsAccepted}
               setTermsAccepted={setTermsAccepted}
             />
             <Grid item xs={12}>
               <SubmitButton
-                onClick={handleSubmit}
+                onClick={() => console.log("Clicked")}
+                // onClick={handleSubmit}
                 isFormComplete={isFormComplete}
               />
             </Grid>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            style={{ textAlign: "center", margin: "10px 20px" }}
-          >
+          <Grid item xs={12}>
             <LoginLink />
           </Grid>
 

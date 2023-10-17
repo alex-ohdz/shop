@@ -1,22 +1,11 @@
-import { Box } from "@mui/material";
 import Button from "@mui/material/Button";
 
 const GoogleButton = ({ onClick, googleIconURL }) => {
   return (
-    <Box>
     <Button
       fullWidth
       variant="outlined"
-      style={{
-        borderColor: "#4285F4",
-        color: "#4285F4",
-        boxShadow: "none",
-        textTransform: "none",
-        margin: "2px 0",
-        padding: "10px 20px",
-        borderRadius: "5px",
-
-      }}
+      className="google-btn "
       startIcon={
         <img
           src={googleIconURL}
@@ -28,7 +17,6 @@ const GoogleButton = ({ onClick, googleIconURL }) => {
     >
       Iniciar con Google
     </Button>
-    </Box>
   );
 };
 

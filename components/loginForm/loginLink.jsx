@@ -3,13 +3,23 @@ import Typography from "@mui/material/Typography";
 
 const LoginLink = () => {
   return (
-    <div style={{ textAlign: "center", margin: "2px 0px" }}>
-      <span style={{ marginRight: "8px" }}>¿Ya tienes una cuenta?</span>
-      <Link href="/" passHref style={{ textDecoration: "none",color:"blue" }}>
-        <Typography component="span" style={{ cursor: "pointer" }}>
+    <div className="loginCuenta">
+      <Typography
+        variant="body2"
+        style={{
+          marginRight: "8px",
+          cursor: "default",
+        }}
+      >
+        ¿Ya tienes una cuenta?{" "}
+        <Link
+          href="/"
+          passHref
+          style={{ textDecoration: "none", color: "blue" }}
+        >
           Entrar
-        </Typography>
-      </Link>
+        </Link>
+      </Typography>
     </div>
   );
 };

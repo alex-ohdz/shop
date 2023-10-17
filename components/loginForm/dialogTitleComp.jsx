@@ -6,13 +6,12 @@ import CloseIcon from "@mui/icons-material/Close";
 const DialogTitleComponent = ({ onClose }) => {
   return (
     <DialogTitle
+    className="cursor"
       sx={{
-        userSelect: "none",
-        cursor: "default",
         color: "#fff",
         backgroundColor: "#3f51b5",
         padding: "3px",
-        marginBottom: "10px",
+        marginBottom: "4px",
         boxShadow: "0 2px 10px rgba(0, 0, 0, 0.3)",
         fontSize: "1.5rem",
         fontWeight: "bold",
@@ -28,9 +27,10 @@ const DialogTitleComponent = ({ onClose }) => {
         onClick={onClose}
         color="inherit"
         size="small"
-        style={{ marginLeft: "auto" }} // Asegura que el botón esté a la derecha
+        style={{ marginLeft: "auto",height:'100%'}} 
+        
       >
-        <CloseIcon />
+        <CloseIcon className="btnClose"/>
       </Button>
     </DialogTitle>
   );

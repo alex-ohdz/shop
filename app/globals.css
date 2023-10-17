@@ -27,34 +27,95 @@
   right: 0;
   left: auto;
 }
-.homeBtn {
-}
 .searchIcon {
 }
-/* const SearchIconWrapper = styled("div")(({ theme }) => ({
-	padding: theme.spacing(0, 2),
-	height: "100%",
-	position: "absolute",
-	pointerEvents: "auto",
-	display: "flex",
-	alignItems: "center",
-	justifyContent: "center",
-  })); */
 #logoNav {
   display: flex;
-  /* background-color: lightblue; */
-  /* border: 1px solid darkblue; */
-  /* padding: 10px;
-  font-size: 16px; */
   height: 40px;
   width: 85px;
   margin-right: 15px;
-  /* padding: 0px; */
-  /* margin: 0px; */
-  
 }
 #imgLogo {
   width: auto;
   height: 125px;
   border-radius: 50%;
 }
+
+/* ----------------Interfaz de Cuenta----------------- */
+.btnClose {
+  transition: transform 0.3s;
+}
+
+.btnClose:hover {
+  transform: rotate(90deg);
+}
+.termLink {
+  text-decoration: none;
+}
+
+.termLink:hover {
+  text-decoration: underline; 
+}
+
+.cursor{
+  user-select: none;
+  cursor: default;
+}
+.termBody{
+  margin-right: auto;
+}
+.actionGrid{
+  margin: 10px 30px;
+}
+.loginCuenta{
+  text-align: center;
+  margin-bottom: 12px;
+  margin-top: 12px;
+}
+.google-btn {
+  background-color: #ECEFF1;
+  border-color: #4285F4;
+  color: #4285F4;
+  text-transform: none;
+  padding: 10px 24px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+}
+
+.google-btn:hover {
+  background-color: #DDE3E9;
+}
+
+.google-btn:active {
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+}
+.submit-btn {
+  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  box-shadow: none;
+  transition: 0.3s; /* Añade una transición para un efecto suave */
+}
+
+.submit-btn.enabled {
+  background-color: #00468C;
+  box-shadow: 0 3px 5px 2px rgba(0, 70, 140, .3);
+}
+
+.submit-btn.disabled {
+  background-color: #D3D3D3;
+}
+
+.submit-btn.enabled:hover {
+  background-color: #003366; /* Un azul un poco más oscuro para el hover */
+}
+
+.submit-btn.enabled:active {
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+
+/* ------------------------------------------------- */

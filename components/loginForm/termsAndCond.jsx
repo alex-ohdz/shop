@@ -1,17 +1,16 @@
-import React from "react";
+import React, { memo } from "react";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import Link from "@mui/material/Link";
-import WarningIcon from "@mui/icons-material/Warning"; // Importa el icono de precaución
+import WarningIcon from "@mui/icons-material/Warning";
 import Typography from "@mui/material/Typography";
 
 function TermsAndConditionsCheckbox({ termsAccepted, setTermsAccepted }) {
   const handleCheckboxChange = (e) => {
     setTermsAccepted(e.target.checked);
   };
-
   return (
-    <div style={{ marginBottom: 10 }}>
+    <div>
       <FormControlLabel
         control={
           <Switch
@@ -21,32 +20,29 @@ function TermsAndConditionsCheckbox({ termsAccepted, setTermsAccepted }) {
           />
         }
         label={
-          <span style={{ userSelect: "none", cursor: "default" }}>
+          <Typography variant="body2" className="cursor termBody">
             He leído y acepto los{" "}
             <Link
               href="/terms-and-conditions"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ textDecoration: "none" }}
-              onMouseOver={(e) => (e.target.style.textDecoration = "underline")}
-              onMouseOut={(e) => (e.target.style.textDecoration = "none")}
+              className="termLink"
             >
               términos y condiciones
             </Link>
-          </span>
+          </Typography>
         }
       />
       <div
         style={{
           display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          userSelect: "none",
+          alignItems: "initial",
+          justifyContent: "initial",
           cursor: "default",
+          marginBottom: 7,
         }}
       >
-        <WarningIcon style={{ color: "orange", marginRight: "1px" }} />
-        {/* Icono de advertencia */}
+        <WarningIcon style={{ color: "orange", marginRight: "5px" }} />
         <Typography variant="caption">
           Debes aceptar los términos y condiciones para activar la cuenta.
         </Typography>
@@ -55,4 +51,4 @@ function TermsAndConditionsCheckbox({ termsAccepted, setTermsAccepted }) {
   );
 }
 
-export default TermsAndConditionsCheckbox;
+export default memo(TermsAndConditionsCheckbox);
