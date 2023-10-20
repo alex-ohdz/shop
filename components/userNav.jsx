@@ -9,8 +9,8 @@ import Skeleton from "@mui/material/Skeleton";
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import LoginForm from "./loginForm";
-import UserLoggedInMenu from "./UserLoggedInMenu";
-import UserLoggedOutMenu from "./UserLoggedOutMenu";
+import UserLoggedInMenu from "./loginForm/UserLoggedInMenu";
+import UserLoggedOutMenu from "./loginForm/UserLoggedOutMenu";
 
 const UserNav = () => {
   const { data: session, status } = useSession();

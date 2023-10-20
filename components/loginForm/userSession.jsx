@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, Button } from "@mui/material";
-import DialogTitle from "./loginForm/dialogTitleComp";
-import GoogleButton from "./loginForm/googleButton";
-import LoginLink from "./loginForm/loginLink";
+import DialogTitle from "./dialogTitleComp";
+import GoogleButton from "./googleButton";
+import LoginLink from "./loginLink";
 
 const UserSession = ({ open, onClose, signIn, handleOpenLoginForm }) => {
   return (

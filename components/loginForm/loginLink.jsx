@@ -1,14 +1,13 @@
 import Link from "next/link";
 import Typography from "@mui/material/Typography";
 
-const LoginLink = ({ text1, text2, url }) => {
+const LoginLink = ({ text1, text2,url }) => {
   return (
-    <div className="loginCuenta">
+    <div className="loginCuenta cursor">
       <Typography
         variant="body2"
         style={{
           marginRight: "8px",
-          cursor: "default",
         }}
       >
         {text1}{" "}

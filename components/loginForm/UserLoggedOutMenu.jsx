@@ -1,7 +1,7 @@
 import { MenuItem, Typography, ListItemIcon } from "@mui/material";
 import LoginIcon from "@mui/icons-material/Login";
 import PersonAdd from "@mui/icons-material/PersonAdd";
-import LoginForm from "./loginForm";
+import LoginForm from "../loginForm";
 import UserSession from "./userSession";
 import { useState } from "react";
 
