@@ -1,23 +1,13 @@
-import Link from "next/link";
 import Typography from "@mui/material/Typography";
 
-const LoginLink = ({ text1, text2,url }) => {
+const LoginLink = ({ text1, text2, onClick }) => {
   return (
     <div className="loginCuenta cursor">
-      <Typography
-        variant="body2"
-        style={{
-          marginRight: "8px",
-        }}
-      >
+      <Typography variant="body2" style={{ marginRight: "8px" }}>
         {text1}{" "}
-        <Link
-          href={url}
-          passHref
-          style={{ textDecoration: "none", color: "blue" }}
-        >
+        <span onClick={onClick} style={{ textDecoration: "none", color: "blue", cursor: "pointer" }}>
           {text2}
-        </Link>
+        </span>
       </Typography>
     </div>
   );

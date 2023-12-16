@@ -12,6 +12,7 @@ const UserLoggedOutMenu = ({ signIn, handleCloseUserMenu }) => {
 
   const handleOpenLoginForm = () => {
     setLoginFormOpen(true);
+    setDialogOpen(false); // Cierra UserSession al abrir LoginForm
     handleCloseUserMenu();
   };
 
@@ -21,6 +22,7 @@ const UserLoggedOutMenu = ({ signIn, handleCloseUserMenu }) => {
 
   const handleOpenDialog = () => {
     setDialogOpen(true);
+    setLoginFormOpen(false); // Cierra LoginForm al abrir UserSession
     handleCloseUserMenu();
   };
 
@@ -47,8 +49,13 @@ const UserLoggedOutMenu = ({ signIn, handleCloseUserMenu }) => {
         open={dialogOpen}
         onClose={handleCloseDialog}
         signIn={signIn}
+        handleOpenLoginForm={handleOpenLoginForm} // Pasar la función como prop
       />
-      <LoginForm open={loginFormOpen} onClose={handleCloseLoginForm} />
+      <LoginForm
+        open={loginFormOpen}
+        onClose={handleCloseLoginForm}
+        handleOpenDialog={handleOpenDialog} // Pasa la función como prop
+      />
     </>
   );
 };
