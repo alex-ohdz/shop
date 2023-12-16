@@ -3,8 +3,8 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import PhoneNumberInput from "./loginForm/phoneUser";
-import EmailField from './loginForm/emailField';
-import PasswordField from './loginForm/passwordField';
+import EmailField from "./loginForm/emailField";
+import PasswordField from "./loginForm/passwordField";
 import Grid from "@mui/material/Grid";
 import CustomTextField from "./loginForm/customTextField";
 import GoogleButton from "./loginForm/googleButton";
@@ -16,9 +16,12 @@ import TermsAndConditionsCheckbox from "./loginForm/termsAndCond";
 import { Box, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
-
-export default function LoginForm({ open, onClose}) {
-
+export default function LoginForm({
+  open,
+  onClose,
+  handleOpenLoginForm,
+  handleOpenDialog,
+}) {
   const initialUserState = {
     firstName: "",
     lastName: "",
@@ -65,12 +68,12 @@ export default function LoginForm({ open, onClose}) {
           </Grid>
         </Grid>
         <EmailField value={user.email} onChange={handleChange} />
-        <PasswordField 
-        value={user.password} 
-        onChange={handleChange} 
-        showPassword={showPassword} 
-        handleClickShowPassword={handleClickShowPassword} 
-      />
+        <PasswordField
+          value={user.password}
+          onChange={handleChange}
+          showPassword={showPassword}
+          handleClickShowPassword={handleClickShowPassword}
+        />
         <Box style={{ marginTop: 15 }}>
           <PhoneNumberInput
             value={user.phoneNumber}
@@ -100,13 +103,18 @@ export default function LoginForm({ open, onClose}) {
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <LoginLink text1={"¿Ya tienes una cuenta?"} text2={"Entrar"} url={"/"}/>
+            <LoginLink
+              text1={"¿Ya tienes una cuenta?"}
+              text2={"Entrar"}
+              onClick={() => {
+                onClose(); // Cierra LoginForm
+                handleOpenDialog(); // Asegúrate de que esta función está definida y recibida como prop
+              }}
+            />
           </Grid>
 
           <Grid item xs={12}>
-            <GoogleButton
-              onClick={() => console.log("Clicked")}
-            />
+            <GoogleButton onClick={() => console.log("Clicked")} />
           </Grid>
         </Grid>
       </DialogActions>
