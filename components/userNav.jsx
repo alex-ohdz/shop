@@ -16,6 +16,12 @@ const UserNav = () => {
   const { data: session, status } = useSession();
   const [providers, setProviders] = useState(null);
   const [loginFormOpen, setLoginFormOpen] = useState(false);
+  const [isRegisterFormOpen, setIsRegisterFormOpen] = useState(false);
+
+  const handleOpenRegisterForm = () => {
+    setIsRegisterFormOpen(true);
+    setLoginFormOpen(false);
+  };
 
   const isLoading = status === "loading";
 
@@ -81,9 +87,10 @@ const UserNav = () => {
               signIn={signIn}
               handleOpenLoginForm={handleOpenLoginForm}
               handleCloseUserMenu={handleCloseUserMenu}
+              handleOpenRegisterForm={handleOpenRegisterForm}
             />
           )}
-          <LoginForm open={loginFormOpen} onClose={handleCloseLoginForm} />
+          <LoginForm open={isRegisterFormOpen} onClose={() => setIsRegisterFormOpen(false)} />
         </Menu>
       </Box>
     </div>

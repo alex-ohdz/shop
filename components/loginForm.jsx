@@ -3,6 +3,8 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import PhoneNumberInput from "./loginForm/phoneUser";
+import EmailField from './loginForm/emailField';
+import PasswordField from './loginForm/passwordField';
 import Grid from "@mui/material/Grid";
 import CustomTextField from "./loginForm/customTextField";
 import GoogleButton from "./loginForm/googleButton";
@@ -13,6 +15,8 @@ import DialogTitle from "./loginForm/dialogTitleComp";
 import TermsAndConditionsCheckbox from "./loginForm/termsAndCond";
 import { Box, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+
+
 export default function LoginForm({ open, onClose}) {
 
   const initialUserState = {
@@ -60,21 +64,13 @@ export default function LoginForm({ open, onClose}) {
             />
           </Grid>
         </Grid>
-        <CustomTextField
-          label="Email"
-          name="email"
-          value={user.email}
-          onChange={handleChange}
-        />
-        <CustomTextField
-          label="Contraseña"
-          name="password"
-          value={user.password}
-          onChange={handleChange}
-          type="password"
-          showPassword={showPassword}
-          handleClickShowPassword={handleClickShowPassword}
-        />
+        <EmailField value={user.email} onChange={handleChange} />
+        <PasswordField 
+        value={user.password} 
+        onChange={handleChange} 
+        showPassword={showPassword} 
+        handleClickShowPassword={handleClickShowPassword} 
+      />
         <Box style={{ marginTop: 15 }}>
           <PhoneNumberInput
             value={user.phoneNumber}
@@ -97,8 +93,8 @@ export default function LoginForm({ open, onClose}) {
             />
             <Grid item xs={12}>
               <SubmitButton
-                onClick={() => console.log("Clicked")}
-                // onClick={handleSubmit}
+                // onClick={() => console.log("Clicked")}
+                onClick={handleSubmit}
                 isFormComplete={isFormComplete}
               />
             </Grid>
