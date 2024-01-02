@@ -1,7 +1,4 @@
 import React from "react";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
 import PhoneNumberInput from "./loginForm/phoneUser";
 import EmailField from "./loginForm/emailField";
 import PasswordField from "./loginForm/passwordField";
@@ -11,22 +8,18 @@ import GoogleButton from "./loginForm/googleButton";
 import SubmitButton from "./loginForm/submitButton";
 import LoginLink from "./loginForm/loginLink";
 import useLoginForm from "./loginForm/useLoginForm";
-import DialogTitle from "./loginForm/dialogTitleComp";
 import TermsAndConditionsCheckbox from "./loginForm/termsAndCond";
-import { Box, useMediaQuery } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import { useMediaQuery } from "@mui/material";
 
-export default function LoginForm({
-  open,
-  onClose,
-  // handleOpenLoginForm,
-  handleOpenDialog,
-}) {
+export default function LoginForm({ handleOpenDialog }) {
   const initialUserState = {
     firstName: "",
     lastName: "",
     email: "",
     password: "",
+    phoneNumber: "",
   };
 
   const {
@@ -39,23 +32,34 @@ export default function LoginForm({
     handleChange,
     handleClickShowPassword,
     handleSubmit,
-  } = useLoginForm(initialUserState, open, onClose,false);
+  } = useLoginForm(initialUserState);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <Dialog open={open} disableEscapeKeyDown={true}>
-      <DialogTitle onClose={onClose} text={"Crear Nuevo Usuario"} />
+    <Container maxWidth="sm">
+      <Typography variant="h5" textAlign="center" sx={{ mt: 2, mb: 4 }}>
+        Crear Cuenta
+      </Typography>
 
-      <DialogContent>
-        <Grid container spacing={isMobile ? 0 : 1}>
+      <Box
+        component="form"
+        noValidate
+        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+        onSubmit={(e) => {
+          e.preventDefault();
+          onSubmit = { handleSubmit };
+        }}
+      >
+        <Grid container spacing={isMobile ? 1 : 2}>
           <Grid item xs={12} sm={6}>
             <CustomTextField
               label="Nombre"
               name="firstName"
               value={user.firstName}
               onChange={handleChange}
+              fullWidth
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -64,59 +68,47 @@ export default function LoginForm({
               name="lastName"
               value={user.lastName}
               onChange={handleChange}
+              fullWidth
             />
           </Grid>
         </Grid>
-        <EmailField value={user.email} onChange={handleChange} />
+        <EmailField value={user.email} onChange={handleChange} fullWidth />
         <PasswordField
           value={user.password}
           onChange={handleChange}
           showPassword={showPassword}
           handleClickShowPassword={handleClickShowPassword}
+          fullWidth
         />
-        <Box style={{ marginTop: 15, with:'auto' }}>
+        <Box sx={{ mt: 2 }}>
           <PhoneNumberInput
             value={user.phoneNumber}
             onChange={(name, value) => setUser({ ...user, [name]: value })}
           />
         </Box>
-      </DialogContent>
-      <DialogActions>
-        <Grid
-          container
-          spacing={0}
-          direction="column"
-          alignItems="stretch"
-          className="actionGrid"
+
+        <TermsAndConditionsCheckbox
+          termsAccepted={termsAccepted}
+          setTermsAccepted={setTermsAccepted}
+        />
+        <SubmitButton
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+          isFormComplete={isFormComplete}
         >
-          <Grid item xs={12}>
-            <TermsAndConditionsCheckbox
-              termsAccepted={termsAccepted}
-              setTermsAccepted={setTermsAccepted}
-            />
-            <Grid item xs={12}>
-              <SubmitButton
-                // onClick={() => console.log("Clicked")}
-                onClick={handleSubmit}
-                isFormComplete={isFormComplete}
-              />
-            </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            <LoginLink
-              text1={"¿Ya tienes una cuenta?"}
-              text2={"Entrar"}
-              onClick={() => {
-                onClose(); // Cierra LoginForm
-                handleOpenDialog(); // Asegúrate de que esta función está definida y recibida como prop
-              }}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <GoogleButton onClick={() => console.log("Clicked")} />
-          </Grid>
-        </Grid>
-      </DialogActions>
-    </Dialog>
+          Registrar Ahora
+        </SubmitButton>
+
+        <LoginLink
+          text1={"¿Ya tienes una cuenta?"}
+          text2={"Entrar"}
+          onClick={handleOpenDialog}
+        />
+
+        <GoogleButton onClick={() => console.log("Clicked")} />
+      </Box>
+    </Container>
   );
 }

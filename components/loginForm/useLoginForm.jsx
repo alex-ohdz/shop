@@ -52,13 +52,10 @@ const useLoginForm = (initialUserState, open, onClose,isLogin) => {
       const data = await response.json();
   
       if (response.ok) {
-        // Aquí manejas la lógica post-inicio de sesión exitoso
-        // Por ejemplo, guardar el token de sesión, redirigir, etc.
+   
         console.log('Login successful', data);
-        onClose(); // Cierra el formulario
-        // router.push('/dashboard'); // Redirige al usuario (si usas useRouter)
+        onClose(); 
       } else {
-        // Manejar errores, como credenciales incorrectas
         console.error('Login failed:', data.message);
       }
     } catch (error) {
