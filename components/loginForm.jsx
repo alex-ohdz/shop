@@ -19,7 +19,7 @@ import { useTheme } from "@mui/material/styles";
 export default function LoginForm({
   open,
   onClose,
-  handleOpenLoginForm,
+  // handleOpenLoginForm,
   handleOpenDialog,
 }) {
   const initialUserState = {
@@ -39,13 +39,13 @@ export default function LoginForm({
     handleChange,
     handleClickShowPassword,
     handleSubmit,
-  } = useLoginForm(initialUserState, open, onClose);
+  } = useLoginForm(initialUserState, open, onClose,false);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <Dialog open={open} disableEscapeKeyDown={true} disableBackdropClick={true}>
+    <Dialog open={open} disableEscapeKeyDown={true}>
       <DialogTitle onClose={onClose} text={"Crear Nuevo Usuario"} />
 
       <DialogContent>
@@ -74,7 +74,7 @@ export default function LoginForm({
           showPassword={showPassword}
           handleClickShowPassword={handleClickShowPassword}
         />
-        <Box style={{ marginTop: 15 }}>
+        <Box style={{ marginTop: 15, with:'auto' }}>
           <PhoneNumberInput
             value={user.phoneNumber}
             onChange={(name, value) => setUser({ ...user, [name]: value })}
@@ -112,7 +112,6 @@ export default function LoginForm({
               }}
             />
           </Grid>
-
           <Grid item xs={12}>
             <GoogleButton onClick={() => console.log("Clicked")} />
           </Grid>

@@ -45,7 +45,6 @@ export default function PhoneNumberInput({ value, onChange }) {
           Teléfono
         </FormLabel>
         <PhoneInput
-          id="phone-number"
           country="us"
           value={value}
           onChange={handleChange}

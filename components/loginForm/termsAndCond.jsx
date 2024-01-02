@@ -1,4 +1,5 @@
 import React, { memo } from "react";
+import { Box } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import Link from "@mui/material/Link";
@@ -10,7 +11,7 @@ function TermsAndConditionsCheckbox({ termsAccepted, setTermsAccepted }) {
     setTermsAccepted(e.target.checked);
   };
   return (
-    <div>
+    <Box>
       <FormControlLabel
         control={
           <Switch
@@ -47,7 +48,7 @@ function TermsAndConditionsCheckbox({ termsAccepted, setTermsAccepted }) {
           Debes aceptar los términos y condiciones para activar la cuenta.
         </Typography>
       </div>
-    </div>
+      </Box>
   );
 }
 

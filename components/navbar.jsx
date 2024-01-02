@@ -47,7 +47,7 @@ function DrawerAppBar(props) {
       <Link
         href="/"
         passHref
-        style={{ textDecoration: "none", color: "inherit" }}
+        className="links"
       >
         <Typography className="homeBtn" variant="h6" sx={{ my: 2 }}>
           MercanciaVC
@@ -60,7 +60,7 @@ function DrawerAppBar(props) {
             key={item.nombre}
             href={`${item.url}`}
             passHref
-            style={{ textDecoration: "none", color: "inherit" }}
+            className="links"
           >
             <ListItem key={item.nombre} disablePadding className="listDrawer">
               <ListItemButton sx={{ textAlign: "center" }}>
@@ -103,14 +103,14 @@ function DrawerAppBar(props) {
               <Link
                 href="/"
                 passHref
-                style={{ textDecoration: "none", color: "inherit" }}
+                className="links"
               >
                 <LogoComponent />
               </Link>
               <CustomizedMenus />
               <Link
                 href={"/ofertas"}
-                style={{ textDecoration: "none", color: "inherit" }}
+                className="links"
               >
                 <Button className="ofBtn" sx={{ color: "inherit" }}>
                   {"Ofertas"}

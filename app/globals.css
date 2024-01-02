@@ -27,17 +27,22 @@
   right: 0;
   left: auto;
 }
+
+.links {
+  text-decoration: none;
+  color: inherit;
+}
 .searchIcon {
 }
 #logoNav {
   display: flex;
   height: 40px;
-  width: 85px;
+  width: 50px;
   margin-right: 15px;
 }
 #imgLogo {
   width: auto;
-  height: 125px;
+  height: 85px;
   border-radius: 50%;
 }
 
@@ -63,9 +68,9 @@
   user-select: none;
   cursor: default;
 }
-.actionGrid {
+/* .actionGrid {
   margin: 10px 10px;
-}
+} */
 .loginCuenta {
   text-align: center;
   margin-bottom: 12px;
@@ -115,9 +120,16 @@
 .submit-btn.enabled:active {
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
 }
-.btnSesion {
-  margin-top: 10px;
+.actionGrid{
+  margin-top: 14px;
   /* padding: 9px 20px; */
 }
+
+/* @media (max-width: 430px) {
+  #phone-number {
+    width:393px
+  }
+}
+ */
 
 /* ------------------------------------------------- */

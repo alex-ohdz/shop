@@ -11,12 +11,10 @@ const UserLoggedInMenu = ({ user, signOut, handleCloseUserMenu }) => {
   };
 
   const handleProfileClick = () => {
-    // Lógica para manejar el clic en el perfil
     handleCloseUserMenu();
   };
 
   const handleWishlistClick = () => {
-    // Lógica para manejar el clic en la lista de deseos
     handleCloseUserMenu();
   };
 

@@ -1,8 +1,8 @@
-import { signIn } from 'next-auth/react';
-import { useState, useEffect } from 'react';
+import { signIn } from "next-auth/react";
+import { useState, useEffect } from "react";
 // import { useRouter } from 'next/navigation';
 
-const useLoginForm = (initialUserState, open, onClose) => {
+const useLoginForm = (initialUserState, open, onClose,isLogin) => {
   const [user, setUser] = useState(initialUserState);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -26,45 +26,72 @@ const useLoginForm = (initialUserState, open, onClose) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const updatedUser = { ...user, [name]: value };
-    setUser(updatedUser);
+    setUser({ ...user, [name]: value });
   };
 
   const handleClickShowPassword = () => setShowPassword((prev) => !prev);
 
-
-  // const router = useRouter();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  
-    // Asegurarse de que todos los campos necesarios estén presentes
-    if (isFieldEmpty(user.firstName) || isFieldEmpty(user.lastName) || isFieldEmpty(user.email) || isFieldEmpty(user.password) || isFieldEmpty(user.phoneNumber) || !termsAccepted) {
-      console.error("All fields are necessary.");
+  const handleLogin = async () => {
+    if (isFieldEmpty(user.email) || isFieldEmpty(user.password)) {
+      console.error("Email and password are required.");
       return;
     }
   
     try {
-      // Verificar si el usuario ya existe
-      const resUserExists = await fetch('/api/user', {
+      const response = await fetch('/api/user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email: user.email }),
+        body: JSON.stringify({
+          email: user.email,
+          password: user.password,
+        }),
       });
   
-      const dataUserExists = await resUserExists.json();
+      const data = await response.json();
   
+      if (response.ok) {
+        // Aquí manejas la lógica post-inicio de sesión exitoso
+        // Por ejemplo, guardar el token de sesión, redirigir, etc.
+        console.log('Login successful', data);
+        onClose(); // Cierra el formulario
+        // router.push('/dashboard'); // Redirige al usuario (si usas useRouter)
+      } else {
+        // Manejar errores, como credenciales incorrectas
+        console.error('Login failed:', data.message);
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+    }
+  };
+  
+
+  const handleRegister = async () => {
+    if (!isFormComplete) {
+      console.error("All fields are necessary.");
+      return;
+    }
+    try {
+      const resUserExists = await fetch("/api/user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: user.email }),
+      });
+
+      const dataUserExists = await resUserExists.json();
+
       if (dataUserExists.user) {
         console.error("User already exists.");
         return;
       }
-  
-      const resRegister = await fetch('/api/register', {
-        method: 'POST',
+
+      const resRegister = await fetch("/api/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           email: user.email,
@@ -72,10 +99,9 @@ const useLoginForm = (initialUserState, open, onClose) => {
           password: user.password,
         }),
       });
-      
-  
+
       if (resRegister.ok) {
-        onClose(); 
+        onClose();
       } else {
         console.error("User registration failed.");
       }
@@ -83,7 +109,8 @@ const useLoginForm = (initialUserState, open, onClose) => {
       console.error("Error during registration: ", error);
     }
   };
-  
+
+  const handleSubmit = isLogin ? handleLogin : handleRegister;
 
   return {
     user,

@@ -1,7 +1,7 @@
 import { IconButton } from "@mui/material";
 
-function LogoComponent() {
-  const logoUrl = "./assets/images/logoN.png";
+const LogoComponent = () => {
+  const logoUrl = "/assets/images/LogoN.png";
 
   return (
     <IconButton aria-label="logo" id="logoNav">
