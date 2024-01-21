@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { MenuItem, Typography, ListItemIcon, Divider } from "@mui/material";
 import Settings from "@mui/icons-material/Settings";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
@@ -21,9 +21,9 @@ const UserLoggedInMenu = ({ user, signOut, handleCloseUserMenu }) => {
   return (
     <>
       <MenuItem disabled style={{ justifyContent: "center" }}>
-        <Typography color="textPrimary">
+        <Typography color="textPrimary" component="div">
           {user.name}
-          <Typography color="textPrimary">{user.email}</Typography>
+          <div>{user.email}</div>
         </Typography>
       </MenuItem>
       <Divider />

@@ -5,14 +5,26 @@ import GoogleButton from "@components/loginForm/googleButton";
 import LoginLink from "@components/loginForm/loginLink";
 import EmailField from "@components/loginForm/emailField";
 import PasswordField from "@components/loginForm/passwordField";
-import useLoginForm from "@components/loginForm/useLoginForm";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  // const router = useRouter();
+  // const redirectToLogin = () => {
+  //   const returnUrl = router.asPath; // Obtiene la ruta actual
+  //   router.push(`/login?returnUrl=${encodeURIComponent(returnUrl)}`);
+  // };
+
+  const validateEmail = (email) => {
+    const re = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    return re.test(String(email).toLowerCase());
+  };
 
   const handleEmailChange = (e) => {
     const newEmail = e.target.value;
@@ -23,30 +35,27 @@ const LoginForm = () => {
   };
 
   const handleClickShowPassword = () => setShowPassword((prev) => !prev);
-  const isFormValid = () => {
-    return (
-      firstName.trim() !== "" &&
-      lastName.trim() !== "" &&
-      email.trim() !== "" &&
-      password.trim() !== "" &&
-      phoneNumber.trim() !== "" &&
-      termsAccepted
-    );
-  };
 
-  const handleLogin = async () => {
-    const result = await signIn("credentials", {
-      redirect: false,
-      email: user.email,
-      password: user.password,
-    });
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-    if (result?.error) {
-      console.error("Login failed:", result.error);
-      // Manejar error de inicio de sesión
-    } else {
-      console.log("Login successful");
-      router.push("/rutaPostLogin"); // Redirigir a la página deseada después del inicio de sesión
+    try {
+      const res = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+
+      if (res.error) {
+        setError("Invalid Credentials");
+        return;
+      }
+
+      // Redirigir al usuario a la ruta de origen o a una ruta predeterminada
+      const returnUrl = router.query.returnUrl || "/defaultRoute";
+      router.push(returnUrl);
+    } catch (error) {
+      console.log(error);
     }
   };
 
