@@ -1,27 +1,18 @@
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 
-const SubmitButton = ({ onClick, isFormComplete }) => {
+const SubmitButton = ({disabled}) => {
   return (
-    
-    <Tooltip
-      title={isFormComplete ? "" : "Complete todos los campos"}
-      arrow
+    <Button
+      type="submit"
+      fullWidth
+      color="primary"
+      disabled={disabled}
+      variant="contained"
+      className={`submit-btn ${!disabled ? "enabled" : "disabled"}`}
     >
-      <span>
-        <Button
-          fullWidth
-          onClick={onClick}
-          color="primary"
-          disabled={!isFormComplete}
-          variant="contained"
-          className={`submit-btn ${isFormComplete ? 'enabled' : 'disabled'}`}
-        >
-          Crear cuenta
-        </Button>
-      </span>
-    </Tooltip>
-   
+      Crear cuenta
+    </Button>
   );
 };
 

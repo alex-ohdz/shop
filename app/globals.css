@@ -1,10 +1,10 @@
-.listDrawer:hover {
-  color: rgb(255, 255, 255);
-  background-color: #1976d2;
-}
+
 .itemProd:hover {
   color: rgb(255, 255, 255);
   background-color: #1976d2;
+}
+.itemProd:hover .itemLink{
+  color: rgb(255, 255, 255);
 }
 #demo-customized-button:hover,
 .ofBtn:hover {
@@ -15,7 +15,7 @@
   content: "";
   position: absolute;
   width: 0;
-  height: 2px; /* Grosor de la línea */
+  height: 2px;
   background-color: rgb(225, 225, 230); /* Color de la línea */
   bottom: 0;
   left: 0;
@@ -120,7 +120,7 @@
 .submit-btn.enabled:active {
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
 }
-.actionGrid{
+.actionGrid {
   margin-top: 14px;
   /* padding: 9px 20px; */
 }

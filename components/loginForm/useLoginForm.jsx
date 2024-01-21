@@ -1,22 +1,32 @@
+"use client";
 import { signIn } from "next-auth/react";
-import { useState, useEffect } from "react";
-// import { useRouter } from 'next/navigation';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-const useLoginForm = (initialUserState, open, onClose,isLogin) => {
+const useLoginForm = (initialUserState, isLogin) => {
   const [user, setUser] = useState(initialUserState);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
-  useEffect(() => {
-    if (!open) {
-      setUser(initialUserState);
-      setTermsAccepted(false);
-    }
-  }, [open]);
+  console.log("isLogin:", isLogin);
 
-  const isFieldEmpty = (field) => field === undefined || field.trim() === "";
+  // useEffect(() => {
+  //   if (!open) {
+  //     setUser(initialUserState);
+  //     setTermsAccepted(false);
+  //   }
+  // }, [open]);
 
-  const isFormComplete =
+  // const isFieldEmpty = (field) => field === undefined || field.trim() === "";
+  const isFieldEmpty = (field) => {
+    const isEmpty = field === undefined || field.trim() === "";
+    console.log(`Field is empty: ${isEmpty}`);
+    return isEmpty;
+  };
+  
+
+  const isRegisterFormComplete =
     !isFieldEmpty(user.firstName) &&
     !isFieldEmpty(user.lastName) &&
     !isFieldEmpty(user.email) &&
@@ -24,90 +34,79 @@ const useLoginForm = (initialUserState, open, onClose,isLogin) => {
     !isFieldEmpty(user.phoneNumber) &&
     termsAccepted;
 
+  const isLoginFormComplete =
+    !isFieldEmpty(user.email) && !isFieldEmpty(user.password);
+
+  const isFormComplete = isLogin ? isLoginFormComplete : isRegisterFormComplete;
+
+  useEffect(() => {
+  console.log(`Is form complete: ${isFormComplete}`);
+}, [user, termsAccepted]);
+
   const handleChange = (e) => {
+    console.log("Field changed:", e.target.name, "Value:", e.target.value);
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
 
   const handleClickShowPassword = () => setShowPassword((prev) => !prev);
 
-  const handleLogin = async () => {
-    if (isFieldEmpty(user.email) || isFieldEmpty(user.password)) {
-      console.error("Email and password are required.");
-      return;
-    }
-  
-    try {
-      const response = await fetch('/api/user', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: user.email,
-          password: user.password,
-        }),
-      });
-  
-      const data = await response.json();
-  
-      if (response.ok) {
-   
-        console.log('Login successful', data);
-        onClose(); 
-      } else {
-        console.error('Login failed:', data.message);
-      }
-    } catch (error) {
-      console.error('Error during login:', error);
-    }
-  };
-  
-
-  const handleRegister = async () => {
+  const handleRegister = async (e) => {
+    e.preventDefault();
     if (!isFormComplete) {
       console.error("All fields are necessary.");
       return;
     }
     try {
-      const resUserExists = await fetch("/api/user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: user.email }),
-      });
-
-      const dataUserExists = await resUserExists.json();
-
-      if (dataUserExists.user) {
-        console.error("User already exists.");
-        return;
-      }
-
-      const resRegister = await fetch("/api/register", {
+      const response = await fetch("/api/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          // name: `${user.firstName} ${user.lastName}`,
+          name: user.firstName,
+          lastName: user.lastName,
           email: user.email,
-          name: `${user.firstName} ${user.lastName}`,
           password: user.password,
+          phoneNumber: user.phoneNumber,
         }),
       });
-
-      if (resRegister.ok) {
-        onClose();
-      } else {
-        console.error("User registration failed.");
+      if (!response.ok) {
+        // Manejar la respuesta no exitosa
+        const errorData = await response.json();
+        console.error("User registration failed:", errorData.message);
+        // Otras acciones basadas en el error
+        return;
       }
+
+      const data = await response.json();
+      console.log("Registration successful:", data);
+      // Otras acciones en caso de éxito
     } catch (error) {
-      console.error("Error during registration: ", error);
+      console.error("Error during registration:", error);
+      // Manejar errores de la solicitud fetch
     }
   };
+  //PARA el login
+  const handleLogin = async () => {
+    const result = await signIn("credentials", {
+      redirect: false,
+      email: user.email,
+      password: user.password,
+    });
 
+    if (result?.error) {
+      console.error("Login failed:", result.error);
+      // Manejar error de inicio de sesión
+    } else {
+      console.log("Login successful");
+      router.push("/rutaPostLogin"); // Redirigir a la página deseada después del inicio de sesión
+    }
+  };
+  
   const handleSubmit = isLogin ? handleLogin : handleRegister;
+  console.log("hadle:",handleSubmit);
 
   return {
     user,

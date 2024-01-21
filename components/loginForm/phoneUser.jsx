@@ -5,10 +5,11 @@ import { AsYouType } from 'libphonenumber-js';
 import { Box, FormControl, FormLabel } from '@mui/material';
 
 export default function PhoneNumberInput({ value, onChange }) {
-  const handleChange = (value) => {
-    const phoneNumber = new AsYouType('US').input(value);
-    onChange('phoneNumber', phoneNumber);
-  };
+  const handleChange = (phoneValue) => {
+  const phoneNumber = new AsYouType('US').input(phoneValue);
+  onChange({ target: { name: 'phoneNumber', value: phoneNumber } });
+};
+
 
   return (
     <FormControl fullWidth variant="outlined">

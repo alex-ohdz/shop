@@ -9,8 +9,9 @@ const userSchema = new Schema(
         validator: function (value) {
           return value.includes(" ") && value.length >= 3 && value.length <= 20;
         },
-        message: (props) => `${props.value} is not a valid full name!`,
+        message: "El nombre completo debe incluir al menos un espacio y tener entre 3 y 20 caracteres.",
       },
+      
     },
     email: {
       type: String,
@@ -22,6 +23,12 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Password is required"],
       select: false,
+    },
+    phoneNumber: {
+      type: String,
+      required: [true, "Phone number is required"],
+      match: [/^\+?[1-9]\d{1,14}$/, "El número de teléfono debe ser válido y estar en formato internacional (+123456789)."],
+
     },
   },
   { timestamps: true }
