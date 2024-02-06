@@ -29,7 +29,7 @@ const CarshopNav = () => {
   return (
     <div>
       <Tooltip title="Ir al carrito">
-        <Link href="/carrito">
+        <Link href="/user/carrito">
         <IconButton
           color="primary"
           aria-label="buy_car"

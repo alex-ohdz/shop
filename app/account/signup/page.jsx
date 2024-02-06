@@ -8,11 +8,11 @@ import CustomTextField from "@components/loginForm/customTextField";
 import GoogleButton from "@components/loginForm/googleButton";
 import SubmitButton from "@components/loginForm/submitButton";
 import LoginLink from "@components/loginForm/loginLink";
-// import useLoginForm from "@components/loginForm/useLoginForm";
 import TermsAndConditionsCheckbox from "@components/loginForm/termsAndCond";
 import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import { useMediaQuery } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 export default function RegisterForm() {
   const [firstName, setFirstName] = useState("");
@@ -24,28 +24,13 @@ export default function RegisterForm() {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
+  const router = useRouter();
+
   const validateEmail = (email) => {
     const re = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
     return re.test(String(email).toLowerCase());
   };
 
-  // Y luego usarlo en el evento onChange o onBlur del campo de correo electrónico.
-
-  // const handleChange = (e) => {
-  //   console.log("Field changed:", e.target.name, "Value:", e.target.value);
-  //   const { name, value } = e.target;
-  //   setUser({ ...user, [name]: value });
-  // };
-  // const {
-  //   user,
-  //   termsAccepted,
-  //   setTermsAccepted,
-  //   showPassword,
-  //   // isFormComplete,
-  //   handleChange,
-  //   handleClickShowPassword,
-  //   handleSubmit,
-  // } = useLoginForm(initialUserState,false);
   const handleClickShowPassword = () => setShowPassword((prev) => !prev);
   const isFormValid = () => {
     return (
@@ -61,42 +46,37 @@ export default function RegisterForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const trimEmail = email.trim();
-    const formatPNumber = phoneNumber.replace(/[\s()-]/g, "");
-    if (!firstName || !lastName || !email || !password || !phoneNumber) {
-      setError("All fields are necessary.");
+
+    if (!isFormValid()) {
+      setError(
+        "Todos los campos son necesarios y debes aceptar los términos y condiciones."
+      );
       return;
     }
-    console.log("Número de teléfono a enviar:", phoneNumber);
 
     try {
-      const response = await fetch("api/auth/signup", {
+      const response = await fetch("/api/auth/signup", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           firstName,
           lastName,
-          email: trimEmail,
+          email: email.trim(),
           password,
-          phoneNumber: formatPNumber,
+          phoneNumber: phoneNumber.replace(/[\s()-]/g, ""),
         }),
       });
-      if (!response.ok) {
-        // Manejar la respuesta no exitosa
-        const errorData = await response.json();
-        console.error("User registration failed:", errorData.message);
-        // Otras acciones basadas en el error
-        return;
-      }
 
       const data = await response.json();
-      console.log("Registration successful:", data);
-      // Otras acciones en caso de éxito
+      if (response.ok) {
+        router.push("/login");
+      } else {
+        setError(data.message || "Ocurrió un error durante el registro.");
+       
+      }
     } catch (error) {
-      console.error("Error during registration:", error);
-      // Manejar errores de la solicitud fetch
+      setError("Ocurrió un error durante el registro.");
+      
     }
   };
 

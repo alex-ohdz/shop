@@ -8,13 +8,15 @@ const UserLoggedOutMenu = ({ handleCloseUserMenu }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleOpenLoginForm = () => {
+    localStorage.setItem('returnUrl', window.location.pathname);
     setDialogOpen(true);
     handleCloseUserMenu();
   };
+  
 
   return (
     <Box>
-      <Link className="links" href="/login" passHref>
+      <Link className="links" href="/account/login" passHref>
         <MenuItem className="itemProd" onClick={handleOpenLoginForm}>
           <ListItemIcon className="itemLink">
             <LoginIcon fontSize="small" />
@@ -23,7 +25,7 @@ const UserLoggedOutMenu = ({ handleCloseUserMenu }) => {
         </MenuItem>
       </Link>
 
-      <Link className="links" href="/signup" passHref>
+      <Link className="links" href="/account/signup" passHref>
         <MenuItem className="itemProd" onClick={handleOpenLoginForm}>
           <ListItemIcon className="itemLink">
             <PersonAdd fontSize="small" />

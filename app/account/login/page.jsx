@@ -16,13 +16,6 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const router = useRouter();
-  // Ejemplo de cómo redirigir y guardar la URL actual
-  // const router = useRouter();
-  // const handleRedirToLogin = () => {
-  //   const returnUrl = router.asPath; // Obtiene la ruta actual
-  //   localStorage.setItem('returnUrl', returnUrl); // Guarda la URL
-  //   router.push('/login'); // Redirige a la página de inicio de sesión
-  // };
 
   const validateEmail = (email) => {
     const re = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
@@ -53,12 +46,7 @@ const LoginForm = () => {
         setError("Invalid Credentials");
         return;
       }
-      // if (necesitaAutenticacion) {
-      //   localStorage.setItem("returnUrl", window.location.pathname);
-      //   router.push("/");
-      // }
 
-      // Redirigir al usuario a la ruta de origen o a una ruta predeterminada
       const returnUrl = localStorage.getItem("returnUrl") || "/";
       router.push(returnUrl);
       localStorage.removeItem("returnUrl"); // Opcional: limpia la URL de retorno una vez usada
